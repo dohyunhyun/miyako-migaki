@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <title>みやこ磨き 主役ロゴ</title>
+  <desc>京都の墓守り みやこ磨きの家紋ロゴ。紺の二重円に金色の磨。</desc>
+  <circle cx="100" cy="100" r="66" stroke="#1B2A4A" stroke-width="4" fill="none"/>
+  <circle cx="100" cy="100" r="54" stroke="#1B2A4A" stroke-width="1" fill="none"/>
+  <text x="100" y="125" text-anchor="middle" font-size="84" font-family="'Yu Mincho','Hiragino Mincho ProN','Noto Serif JP',serif" font-weight="800" fill="#C9A84C">磨</text>
+</svg>

@@ -24,12 +24,28 @@
 <script>
 var LINE_OFFICIAL_URL = "https://lin.ee/XXXXXXX";
 var GRADES = {A:{label:"良好",color:"#2E7D32",bg:"#E8F5E9",mark:"✓"},B:{label:"軽微な劣化",color:"#F57F17",bg:"#FFF9C4",mark:"△"},C:{label:"要メンテナンス",color:"#E65100",bg:"#FFF3E0",mark:"!"},D:{label:"早急な対応必要",color:"#B71C1C",bg:"#FFEBEE",mark:"!!"}};
-var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},{name:"竹",title:"標準クリーニング",items:"梅+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},{name:"松",title:"プレミアム再生研磨",items:"竹+特殊研磨・撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}];
+var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5"},{name:"竹",title:"標準クリーニング",items:"梅+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9"},{name:"松",title:"プレミアム再生研磨",items:"竹+特殊研磨・撥水コーティング",color:"#FFB300",bg:"#FFFDE7"}];
 var state = {photos:[],cust:{name:"",location:"",temple:"",phone:""},busy:false,result:null,err:"",status:"",tab:"input"};
 
 function compressImage(dataUrl,maxPx,quality){return new Promise(function(resolve){var img=new Image();img.onload=function(){var w=img.width,h=img.height;if(w>maxPx||h>maxPx){if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;}}var cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(img,0,0,w,h);resolve(cv.toDataURL("image/jpeg",quality));};img.onerror=function(){resolve(null);};img.src=dataUrl;});}
 function fmtVal(v,c,f){if(!v)return f||"—";if(c==="低")return f||"不明";return v;}
 function esc(s){if(s==null)return "";return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+// おすすめプランを決定（AIの結果優先、フォールバックは評価から判定）
+function pickRecommendedPlan(r) {
+  if (r && r.recommended_plan) {
+    var p = String(r.recommended_plan).trim();
+    if (p.indexOf("松") >= 0) return "松";
+    if (p.indexOf("竹") >= 0) return "竹";
+    if (p.indexOf("梅") >= 0) return "梅";
+  }
+  // フォールバック
+  if (r) {
+    if (r.overall_grade === "A") return "梅";
+    if (r.overall_grade === "D") return "松";
+  }
+  return "竹";
+}
 
 function render(){var root=document.getElementById("app");root.innerHTML=headerHTML()+tabsHTML()+(state.tab==="input"?inputHTML():resultHTML());attachHandlers();}
 
@@ -54,46 +70,7 @@ function resultHTML(){
   var ai='<div style="font-size:9px;color:#999;font-weight:500;font-style:italic;">※ AI画像分析による概算評価です</div>';
   var dh=det.length===0?'<div style="font-size:12px;color:#888;">劣化は検出されませんでした</div>':det.map(function(d,i){var c=d.severity==="重度"?"#d32f2f":d.severity==="中度"?"#ef6c00":"#2e7d32";return '<div style="padding:8px 0;border-bottom:'+(i<det.length-1?"1px solid #e8e0d0":"none")+';"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><span style="font-weight:600;font-size:13px;color:#333;">'+esc(d.type)+'</span><span style="background:'+c+';color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;">'+esc(d.severity)+'</span></div><div style="font-size:11px;color:#777;">箇所：'+esc(d.location)+'</div><div style="font-size:12px;color:#555;margin-top:3px;line-height:1.5;">'+esc(d.description)+'</div></div>';}).join("");
   var ph=state.photos.length>0?'<div style="'+cs+'"><div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">現状写真</div><div style="display:grid;grid-template-columns:'+(state.photos.length===1?"1fr":"1fr 1fr")+';gap:6px;">'+state.photos.map(function(p){return '<img src="'+p.dataUrl+'" alt="" style="width:100%;height:120px;object-fit:cover;border-radius:6px;">';}).join("")+'</div></div>':"";
-  var pl=PLANS.map(function(p){return '<div style="background:'+p.bg+';border:'+(p.best?"2px solid "+p.color:"1px solid #e0e0e0")+';border-radius:10px;padding:12px;position:relative;">'+(p.best?'<div style="position:absolute;top:-8px;right:10px;background:'+p.color+';color:#fff;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;">おすすめ</div>':"")+'<div style="display:flex;align-items:center;gap:10px;"><span class="serif" style="background:'+p.color+';color:#fff;font-size:11px;font-weight:800;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+p.name+'</span><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#333;">'+p.title+'</div><div style="font-size:11px;color:#777;margin-top:2px;">'+p.items+'</div></div></div></div>';}).join("");
-  return '<div style="padding:16px 20px;"><div style="background:'+g.bg+';border:2px solid '+g.color+';border-radius:12px;padding:16px;text-align:center;margin-bottom:16px;"><div style="font-size:11px;color:#666;">総合評価</div><div class="serif" style="font-size:44px;font-weight:800;color:'+g.color+';line-height:1;">'+esc(r.overall_grade)+'</div><div style="font-size:15px;font-weight:600;color:'+g.color+';margin-top:2px;">'+g.mark+' '+g.label+'</div></div><div style="'+cs+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;"><div style="font-size:13px;font-weight:600;color:#1a1a2e;">基本情報</div>'+ai+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div><div style="font-size:10px;color:#999;">石種</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(fmtVal(r.stone_type,r.stone_type_confidence,"不明"))+'</div></div><div><div style="font-size:10px;color:#999;">建墓推定年数</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(fmtVal(r.estimated_age,r.estimated_age_confidence,"不定"))+'</div></div><div><div style="font-size:10px;color:#999;">推定サイズ</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(st)+'</div></div><div><div style="font-size:10px;color:#999;">サイズ精度</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(sc)+'</div></div></div></div><div style="'+cs+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;"><div style="font-size:13px;font-weight:600;color:#1a1a2e;">劣化診断詳細</div>'+ai+'</div>'+dh+'</div>'+ph+'<div style="'+cs+'"><div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">推奨施工・次回診断</div><div style="font-size:13px;color:#333;line-height:1.7;margin-bottom:8px;">'+esc(r.recommended_service)+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:#fff;border-radius:8px;padding:8px;text-align:center;border:1px solid #e0d8c8;"><div style="font-size:10px;color:#999;">推奨施工時期</div><div style="font-size:13px;font-weight:600;color:#c9a961;">'+esc(r.recommended_timing)+'</div></div><div style="background:#fff;border-radius:8px;padding:8px;text-align:center;border:1px solid #e0d8c8;"><div style="font-size:10px;color:#999;">次回診断目安</div><div style="font-size:13px;font-weight:600;color:#c9a961;">'+nxt.getFullYear()+'年'+(nxt.getMonth()+1)+'月</div></div></div></div>'+(r.notes?'<div style="background:#fffde7;border:1px solid #fff176;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="font-size:11px;font-weight:600;color:#f57f17;margin-bottom:3px;">⚠ その他所見</div><div style="font-size:12px;color:#555;line-height:1.6;">'+esc(r.notes)+'</div></div>':"")+'<div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">お見積り概算プラン</div><div style="font-size:11px;color:#999;margin-bottom:10px;">※ 正式なお見積りは現地確認後にご提案いたします</div><div style="display:grid;gap:8px;margin-bottom:14px;">'+pl+'</div><a href="'+LINE_OFFICIAL_URL+'" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><div style="background:linear-gradient(135deg,#06C755,#00B900);color:#fff;padding:14px 20px;border-radius:12px;text-align:center;margin-bottom:16px;box-shadow:0 4px 12px rgba(6,199,85,.25);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;"><span style="background:#fff;color:#06C755;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;">L</span><div style="text-align:left;"><div style="font-size:15px;font-weight:700;letter-spacing:1px;">簡易見積もりを進める</div><div style="font-size:10px;opacity:.9;margin-top:2px;">LINE公式アカウントでご相談</div></div></div></a><div style="border-top:2px solid #c9a961;padding-top:12px;text-align:center;"><div class="serif" style="font-size:13px;color:#1a1a2e;font-weight:600;">みやこ磨き</div><div style="font-size:10px;color:#999;margin-top:3px;">診断日：'+now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日'+(state.cust.name?' ｜ '+esc(state.cust.name)+' 様':"")+'</div></div></div>';
-}
-
-function attachHandlers(){
-  document.querySelectorAll("[data-tab]").forEach(function(b){b.addEventListener("click",function(){var t=b.getAttribute("data-tab");if(t==="result"&&!state.result)return;state.tab=t;render();});});
-  var cam=document.querySelector("[data-cam]");var gal=document.querySelector("[data-gal]");
-  if(cam)cam.addEventListener("click",function(){document.getElementById("camInput").click();});
-  if(gal)gal.addEventListener("click",function(){document.getElementById("galInput").click();});
-  var ci=document.getElementById("camInput");var gi=document.getElementById("galInput");
-  if(ci)ci.addEventListener("change",handleFiles);if(gi)gi.addEventListener("change",handleFiles);
-  document.querySelectorAll("[data-remove]").forEach(function(b){b.addEventListener("click",function(){var id=parseFloat(b.getAttribute("data-remove"));state.photos=state.photos.filter(function(p){return p.id!==id;});render();});});
-  document.querySelectorAll("[data-cust]").forEach(function(inp){inp.addEventListener("input",function(){state.cust[inp.getAttribute("data-cust")]=inp.value;});});
-  var r=document.getElementById("runBtn");if(r)r.addEventListener("click",runDiagnosis);
-}
-
-function handleFiles(e){Array.from(e.target.files).forEach(function(f){var rd=new FileReader();rd.onload=function(ev){state.photos.push({id:Date.now()+Math.random(),dataUrl:ev.target.result,file:f});render();};rd.readAsDataURL(f);});e.target.value="";}
-
-async function runDiagnosis(){
-  if(!state.photos.length||state.busy)return;
-  state.busy=true;state.err="";state.status="📷 写真を圧縮中...";render();
-  try{
-    var compressed=[];
-    for(var i=0;i<Math.min(state.photos.length,2);i++){
-      state.status="📷 写真を圧縮中... ("+(i+1)+"/"+Math.min(state.photos.length,2)+")";render();
-      var small=await compressImage(state.photos[i].dataUrl,800,0.6);
-      if(small)compressed.push({base64:small.split(",")[1],mediaType:"image/jpeg"});
-    }
-    if(compressed.length===0)throw new Error("写真の圧縮に失敗");
-    state.status="🤖 AIが分析中...";render();
-    var resp=await fetch("/api/diagnose",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({images:compressed})});
-    var data=await resp.json();
-    if(!resp.ok)throw new Error(data.error||"API Error "+resp.status);
-    if(!data.result)throw new Error("診断結果なし");
-    state.result=data.result;state.tab="result";state.status="";
-  }catch(e){state.err=e.message||String(e);state.status="";}
-  state.busy=false;render();
-}
-
-render();
-</script>
-</body>
-</html>
+  // おすすめプランを動的に判定
+  var recommended = pickRecommendedPlan(r);
+  var pl=PLANS.map(function(p){var isBest = (p.name === recommended);return '<div style="background:'+p.bg+';border:'+(isBest?"2px solid "+p.color:"1px solid #e0e0e0")+';border-radius:10px;padding:12px;position:relative;">'+(isBest?'<div style="position:absolute;top:-8px;right:10px;background:'+p.color+';color:#fff;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;">おすすめ</div>':"")+'<div style="display:flex;align-items:center;gap:10px;"><span class="serif" style="background:'+p.color+';color:#fff;font-size:11px;font-weight:800;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+p.name+'</span><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#333;">'+p.title+'</div><div style="font-size:11px;color:#777;margin-top:2px;">'+p.items+'</div></div></div></div>';}).join("");
+  return '<div style="padding:16px 20px;"><div style="background:'+g.bg+';border:2px solid '+g.color+';border-radius:12px;padding:16px;text-align:center;margin-bottom:16px;"><div style="font-size:11px;color:#666;">総合評価</div><div class="serif" style="font-size:44px;font-weight:800;color:'+g.color+';line-height:1;">'+esc(r.overall_grade)+'</div><div style="font-size:15px;font-weight:600;color:'+g.color+';margin-top:2px;">'+g.mark+' '+g.label+'</div></div><div style="'+cs+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;"><div style="font-size:13px;font-weight:600;color:#1a1a2e;">基本情報</div>'+ai+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div><div style="font-size:10px;color:#999;">石種</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(fmtVal(r.stone_type,r.stone_type_confidence,"不明"))+'</div></div><div><div style="font-size:10px;color:#999;">建墓推定年数</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(fmtVal(r.estimated_age,r.estimated_age_confidence,"不定"))+'</div></div><div><div style="font-size:10px;color:#999;">推定サイズ</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(st)+'</div></div><div><div style="font-size:10px;color:#999;">サイズ精度</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(sc)+'</div></div></div></div><div style="'+cs+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;"><div style="font-size:13px;font-weight:600;color:#1a1a2e;">劣化診断詳細</div>'+ai+'</div>'+dh+'</div>'+ph+'<div style="'+cs+'"><div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">推奨施工・次回診断</div><div style="font-size:13px;color:#333;line-height:1.7;margin-bottom:8px;">'+esc(r.recommended_service)+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:#fff;border-radius:8px;padding:8px;text-align:center;border:1px solid #e0d8c8;"><div style="font-size:10px;color:#999;">推奨施工時期</div><div style="font-size:13px;font-weight:600;color:#c9a961;">'+esc(r.recommended_timing)+'</div></div><div style="background:#fff;border-radius:8px;padding:8px;text-align:center;border:1px solid #e0d8c8;"><div style="font-size:10px;color:#999;">次回診断目安</div><div style="font-size:13px;font-weight:600;color:#c9a961;">'+nxt.getFullYear()+'年'+(nxt.getMonth()+1)+'月</div></div></div></div>'+(r.notes?'<div style="background:#fffde7;border:1px solid #fff176;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="font-size:11px;font-weight:600;color:#f57f17;margin-bottom:3px;">⚠ その他所見</div><div style="font-size:12px;color:#555;line-height:1.6;">'+esc(r.notes)+'</div></div>':"")+'<div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">お見積り概算プラン</div><div style="font-size:11px;color:#999;margin-bottom:10px;">※ 正式なお見積りは現地確認後にご提案いたします</div><div style="display:grid;gap:8px;margin-bottom:14px;">'+pl+'</div>

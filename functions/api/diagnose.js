@@ -65,7 +65,6 @@ function findJSON(raw) {
   return null;
 }
 
-// NGワードを安全な表現に置換（保険）
 function sanitizeServiceText(text) {
   if (!text) return text;
   let s = String(text);
@@ -82,7 +81,6 @@ function sanitizeServiceText(text) {
   return s;
 }
 
-// おすすめプランの判定（AIが返さなかった場合のフォールバック）
 function decidePlan(r) {
   if (r.recommended_plan) {
     const p = String(r.recommended_plan).trim();
@@ -90,7 +88,6 @@ function decidePlan(r) {
     if (p.indexOf("竹") >= 0) return "竹";
     if (p.indexOf("梅") >= 0) return "梅";
   }
-  // フォールバック: 総合評価から判定
   const g = r.overall_grade;
   if (g === "A") return "梅";
   if (g === "B") return "竹";
@@ -106,15 +103,46 @@ function fixResult(r) {
   if (!Array.isArray(r.deterioration)) r.deterioration = [];
   if (!r.estimated_size) r.estimated_size = { width_cm: 80, depth_cm: 80, height_cm: 100, confidence: "低" };
   r.next_inspection_months = parseInt(r.next_inspection_months) || 6;
-
-  // NGワードのサニタイズ
   r.recommended_service = sanitizeServiceText(r.recommended_service);
   r.notes = sanitizeServiceText(r.notes);
-
-  // おすすめプランの確定
   r.recommended_plan = decidePlan(r);
-
   return r;
+}
+
+// 529（Overloaded）や 503（Service Unavailable）時に自動リトライ
+async function callClaudeWithRetry(apiKey, reqBody) {
+  const delays = [1500, 3500, 7000]; // 1.5秒 → 3.5秒 → 7秒
+  let lastResp = null;
+  let lastErrText = "";
+
+  for (let attempt = 0; attempt <= delays.length; attempt++) {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify(reqBody),
+    });
+
+    // 成功なら即返す
+    if (resp.ok) return resp;
+
+    // 混雑系エラー（529/503/429）なら待ってリトライ
+    if ((resp.status === 529 || resp.status === 503 || resp.status === 429) && attempt < delays.length) {
+      lastResp = resp;
+      try { lastErrText = await resp.text(); } catch (e) { lastErrText = ""; }
+      await new Promise(r => setTimeout(r, delays[attempt]));
+      continue;
+    }
+
+    // それ以外のエラーは即返す
+    return resp;
+  }
+
+  // 全リトライ失敗
+  return lastResp;
 }
 
 export async function onRequestPost(context) {
@@ -146,29 +174,40 @@ export async function onRequestPost(context) {
       },
     }));
 
-    const apiResp = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-5-20250929",
-        max_tokens: 2000,
-        messages: [
-          {
-            role: "user",
-            content: [...imageBlocks, { type: "text", text: PROMPT }],
-          },
-        ],
-      }),
-    });
+    const reqBody = {
+      model: "claude-sonnet-4-5-20250929",
+      max_tokens: 2000,
+      messages: [
+        {
+          role: "user",
+          content: [...imageBlocks, { type: "text", text: PROMPT }],
+        },
+      ],
+    };
 
-    if (!apiResp.ok) {
-      const errText = await apiResp.text();
-      return new Response(JSON.stringify({ error: `Claude API Error ${apiResp.status}: ${errText}` }), {
-        status: apiResp.status,
+    const apiResp = await callClaudeWithRetry(apiKey, reqBody);
+
+    if (!apiResp || !apiResp.ok) {
+      const status = apiResp ? apiResp.status : 500;
+      let errText = "";
+      try { errText = await apiResp.text(); } catch (e) {}
+
+      // ユーザー向けのわかりやすいメッセージに変換
+      let friendly = `Claude API Error ${status}`;
+      if (status === 529 || status === 503) {
+        friendly = "現在AIサーバーが混雑しています。30秒〜1分ほど時間を置いてから、もう一度お試しください。";
+      } else if (status === 429) {
+        friendly = "リクエストが集中しています。少し時間を置いてから再度お試しください。";
+      } else if (status === 401 || status === 403) {
+        friendly = "APIキーの認証に失敗しました。管理者にお問い合わせください。";
+      } else if (status >= 500) {
+        friendly = "AIサーバーで一時的な問題が発生しています。しばらく時間を置いてからお試しください。";
+      } else {
+        friendly = `AI診断でエラーが発生しました（コード: ${status}）。しばらく時間を置いてからお試しください。`;
+      }
+
+      return new Response(JSON.stringify({ error: friendly, detail: errText.substring(0, 300) }), {
+        status: status,
         headers: { "Content-Type": "application/json" },
       });
     }
@@ -183,7 +222,7 @@ export async function onRequestPost(context) {
     }
 
     if (!aiText) {
-      return new Response(JSON.stringify({ error: "No text in AI response" }), {
+      return new Response(JSON.stringify({ error: "AIからの応答が空でした。もう一度お試しください。" }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
       });
@@ -191,7 +230,7 @@ export async function onRequestPost(context) {
 
     const parsed = findJSON(aiText);
     if (!parsed) {
-      return new Response(JSON.stringify({ error: "Failed to parse JSON", raw: aiText.substring(0, 500) }), {
+      return new Response(JSON.stringify({ error: "AIの応答を解析できませんでした。もう一度お試しください。", raw: aiText.substring(0, 300) }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
       });
@@ -204,7 +243,7 @@ export async function onRequestPost(context) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message || String(err) }), {
+    return new Response(JSON.stringify({ error: "想定外のエラーが発生しました：" + (err.message || String(err)) }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

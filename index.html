@@ -24,16 +24,15 @@
 <script>
 var LINE_OFFICIAL_URL = "https://lin.ee/XXXXXXX";
 var GRADES = {A:{label:"良好",color:"#2E7D32",bg:"#E8F5E9",mark:"✓"},B:{label:"軽微な劣化",color:"#F57F17",bg:"#FFF9C4",mark:"△"},C:{label:"要メンテナンス",color:"#E65100",bg:"#FFF3E0",mark:"!"},D:{label:"早急な対応必要",color:"#B71C1C",bg:"#FFEBEE",mark:"!!"}};
-var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},{name:"竹",title:"標準クリーニング",items:"梅+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},{name:"松",title:"プレミアム再生研磨",items:"竹+特殊研磨・撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}];
+var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},{name:"竹",title:"標準クリーニング",items:"梅+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},{name:"松",title:"長期美観維持プラン",items:"竹+撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}];
 var state = {photos:[],cust:{name:"",location:"",temple:"",phone:""},busy:false,result:null,err:"",status:"",tab:"input"};
 
 function compressImage(dataUrl,maxPx,quality){return new Promise(function(resolve){var img=new Image();img.onload=function(){var w=img.width,h=img.height;if(w>maxPx||h>maxPx){if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;}}var cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(img,0,0,w,h);resolve(cv.toDataURL("image/jpeg",quality));};img.onerror=function(){resolve(null);};img.src=dataUrl;});}
 function fmtVal(v,c,f){if(!v)return f||"—";if(c==="低")return f||"不明";return v;}
 function esc(s){if(s==null)return "";return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 
-// PLANSのbestフラグを動的に書き換える関数（resultHTMLの前に呼ぶ）
 function updatePlanRecommendation(r) {
-  var recommendedName = "竹"; // デフォルト
+  var recommendedName = "竹";
   if (r && r.recommended_plan) {
     var p = String(r.recommended_plan).trim();
     if (p.indexOf("松") >= 0) recommendedName = "松";
@@ -67,7 +66,6 @@ function inputHTML(){
 function resultHTML(){
   if(!state.result)return '<div style="padding:40px 20px;text-align:center;color:#999;font-size:13px;">入力タブから診断を実行してください</div>';
   var r=state.result;
-  // おすすめプランを動的更新（PLANS配列のbestフラグを書き換え）
   updatePlanRecommendation(r);
   var g=GRADES[r.overall_grade]||GRADES.B;var now=new Date();var nxt=new Date(now);nxt.setMonth(nxt.getMonth()+(r.next_inspection_months||6));var det=r.deterioration||[];var sz=r.estimated_size;
   var st=sz&&sz.confidence!=="低"?sz.width_cm+"x"+sz.depth_cm+"x"+sz.height_cm+"cm":"不明";var sc=(sz&&sz.confidence)||"不明";

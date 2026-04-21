@@ -1,0 +1,326 @@
+/* ============================================
+   みやこ磨き — ブランド共通スタイル
+   ============================================ */
+
+:root{
+  /* ── Core palette ── */
+  --navy:#1B2A4A;
+  --navy-dark:#0F1C35;
+  --navy-mid:#243358;
+  --navy-ink:#0A1326;
+
+  --gold:#C9A84C;
+  --gold-lt:#E2C97A;
+  --gold-dk:#9A7A30;
+
+  --cream:#F5F0E8;
+  --cream-dk:#EAE3D5;
+  --white:#FDFAF6;
+
+  /* ── 伝統色（アクセント） ── */
+  --ai:#1F3A5F;       /* 藍 */
+  --akane:#B7433B;    /* 茜 */
+  --matcha:#7B8F4E;   /* 抹茶 */
+  --sumi:#1A1A1A;     /* 墨 */
+
+  --text:#2C2C2C;
+  --text-lt:#5A5A5A;
+
+  /* ── Typography ── */
+  --font-serif:'Noto Serif JP','Yu Mincho','Hiragino Mincho ProN',serif;
+  --font-sans:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',-apple-system,sans-serif;
+
+  /* ── Layout ── */
+  --maxw:1200px;
+  --maxw-narrow:720px;
+
+  /* ── Shadow ── */
+  --shadow-gold:0 4px 20px rgba(201,168,76,0.25);
+  --shadow-deep:0 8px 40px rgba(0,0,0,0.35);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:var(--font-sans);
+  background:var(--navy-dark);
+  color:var(--white);
+  line-height:1.95;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+@media(min-width:860px){body{font-size:16px;}}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit;}
+
+/* ============================================
+   ヘッダー／ナビ
+   ============================================ */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(15,28,53,0.85);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(201,168,76,0.2);
+  transition:background 0.3s ease;
+}
+.site-header__inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 clamp(1rem,4vw,2rem);
+  height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand__mark{
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  background:url('logo-dark.svg') center/contain no-repeat;
+  flex-shrink:0;
+}
+.brand__mark > *{display:none;}
+.site-footer .brand__mark{width:52px;height:52px;}
+.brand__name{
+  font-family:var(--font-serif);
+  font-size:1.15rem;
+  color:var(--white);
+  letter-spacing:0.12em;
+  line-height:1.2;
+}
+.brand__name small{
+  display:block;
+  font-family:var(--font-sans);
+  font-size:0.55rem;
+  color:var(--gold-lt);
+  letter-spacing:0.28em;
+  margin-top:2px;
+}
+
+.nav{display:flex;align-items:center;gap:clamp(1rem,2.5vw,2rem);}
+.nav a{
+  font-family:var(--font-serif);
+  font-size:1.05rem;
+  color:rgba(255,255,255,0.82);
+  letter-spacing:0.1em;
+  position:relative;
+  transition:color 0.2s;
+}
+.nav a::after{
+  content:'';position:absolute;left:0;bottom:-6px;
+  width:0;height:1px;background:var(--gold);
+  transition:width 0.3s;
+}
+.nav a:hover{color:var(--gold-lt);}
+.nav a:hover::after{width:100%;}
+.nav__cta{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:0.7rem 1.3rem;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);
+  color:var(--navy-dark) !important;
+  border-radius:3px;
+  font-weight:700;
+  font-family:var(--font-sans) !important;
+  font-size:0.9rem !important;
+  letter-spacing:0.1em;
+  box-shadow:var(--shadow-gold);
+}
+.nav__cta::after{display:none;}
+.nav__cta:hover{color:var(--navy-dark) !important;transform:translateY(-1px);}
+
+.nav-toggle{
+  display:none;
+  width:32px;height:32px;
+  flex-direction:column;justify-content:center;gap:6px;
+}
+.nav-toggle span{
+  width:24px;height:1px;background:var(--gold-lt);
+  transition:0.25s;
+}
+
+@media (max-width:860px){
+  .nav{
+    position:fixed;inset:72px 0 0 0;
+    background:var(--navy-dark);
+    flex-direction:column;justify-content:flex-start;
+    padding:3rem 2rem;gap:2rem;
+    transform:translateX(100%);transition:transform 0.35s ease;
+  }
+  .nav.open{transform:translateX(0);}
+  .nav a{font-size:1.2rem;}
+  .nav-toggle{display:flex;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+}
+
+/* ============================================
+   セクション共通
+   ============================================ */
+.section{
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem);
+  max-width:var(--maxw);
+  margin:0 auto;
+}
+.section--narrow{max-width:var(--maxw-narrow);}
+.section-head{
+  text-align:center;
+  margin-bottom:clamp(2.5rem,5vw,4rem);
+}
+.section-head__label{
+  display:inline-block;
+  font-size:0.7rem;
+  letter-spacing:0.35em;
+  color:var(--gold-lt);
+  margin-bottom:1rem;
+}
+.section-head__label::before,
+.section-head__label::after{
+  content:'';display:inline-block;
+  width:28px;height:1px;
+  background:var(--gold);
+  vertical-align:middle;
+  margin:0 0.75rem;
+  opacity:0.6;
+}
+.section-head__title{
+  font-family:var(--font-serif);
+  font-size:clamp(1.6rem,3.8vw,2.4rem);
+  font-weight:400;
+  letter-spacing:0.12em;
+  line-height:1.5;
+}
+.section-head__title span{color:var(--gold);}
+.section-head__sub{
+  margin-top:1.2rem;
+  font-size:1.02rem;
+  color:rgba(255,255,255,0.72);
+  line-height:2;
+}
+
+/* ============================================
+   ボタン
+   ============================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:1.15rem 2.4rem;
+  min-height:56px;
+  font-family:var(--font-serif);
+  font-size:1.05rem;font-weight:500;
+  letter-spacing:0.1em;
+  border-radius:3px;
+  transition:all 0.25s ease;
+  cursor:pointer;
+}
+.btn--primary{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);
+  color:var(--navy-dark);
+  box-shadow:var(--shadow-gold);
+  font-weight:700;
+}
+.btn--primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(201,168,76,0.5);
+}
+.btn--ghost{
+  background:transparent;
+  border:1px solid rgba(201,168,76,0.45);
+  color:var(--gold-lt);
+}
+.btn--ghost:hover{
+  border-color:var(--gold);
+  background:rgba(201,168,76,0.08);
+  color:var(--gold);
+}
+.btn--line{
+  background:#06C755;
+  color:#fff;
+  box-shadow:0 4px 20px rgba(6,199,85,0.35);
+}
+.btn--line:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(6,199,85,0.5);}
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer{
+  background:var(--navy-ink);
+  border-top:1px solid rgba(201,168,76,0.2);
+  padding:4rem clamp(1rem,4vw,2rem) 2rem;
+  margin-top:4rem;
+}
+.site-footer__inner{
+  max-width:var(--maxw);margin:0 auto;
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  gap:3rem;
+  padding-bottom:3rem;
+  border-bottom:1px solid rgba(201,168,76,0.15);
+}
+.site-footer__brand .brand{margin-bottom:1.25rem;}
+.site-footer__desc{
+  font-size:0.8rem;color:rgba(255,255,255,0.55);
+  line-height:1.9;max-width:360px;
+}
+.site-footer h4{
+  font-family:var(--font-serif);
+  font-size:0.85rem;color:var(--gold-lt);
+  letter-spacing:0.2em;margin-bottom:1.2rem;font-weight:500;
+}
+.site-footer ul{list-style:none;}
+.site-footer li{margin-bottom:0.7rem;}
+.site-footer a{
+  font-size:0.82rem;color:rgba(255,255,255,0.6);
+  transition:color 0.2s;
+}
+.site-footer a:hover{color:var(--gold-lt);}
+.site-footer__bottom{
+  max-width:var(--maxw);margin:0 auto;
+  padding-top:2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.72rem;color:rgba(255,255,255,0.4);
+  letter-spacing:0.1em;
+}
+@media(max-width:720px){
+  .site-footer__inner{grid-template-columns:1fr;gap:2rem;}
+  .site-footer__bottom{flex-direction:column;gap:0.75rem;}
+}
+
+/* ============================================
+   和風装飾モチーフ
+   ============================================ */
+.kamon-divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:1rem;margin:clamp(2rem,4vw,3rem) auto;
+  opacity:0.6;
+}
+.kamon-divider::before,.kamon-divider::after{
+  content:'';flex:1;max-width:120px;
+  height:1px;background:var(--gold);opacity:0.5;
+}
+.kamon-divider svg{width:20px;height:20px;fill:var(--gold);}
+
+/* ノイズ／和紙テクスチャ */
+.washi-bg{
+  position:relative;
+  background-color:var(--navy-dark);
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(201,168,76,0.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(31,58,95,0.4) 0%,transparent 50%);
+}
+.washi-bg::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  opacity:0.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* 縦書き */
+.vertical-rl{
+  writing-mode:vertical-rl;
+  -webkit-writing-mode:vertical-rl;
+  text-orientation:mixed;
+}
+
+/* スクロール時のフェードイン */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.9s ease,transform 0.9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}

@@ -2,117 +2,1295 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>お墓の健康診断書 | みやこ磨き</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>みやこ磨き｜京都の墓石クリーニング・お墓参り代行</title>
+<meta name="description" content="京都で墓石クリーニング・お墓参り代行を行う「みやこ磨き」。職人の技でご先祖様のお墓を本来の姿へ。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/brand.css?v=20251119">
 <style>
-  * { box-sizing: border-box; }
-  body { margin:0; padding:0; background:#f0ede6; font-family: 'Noto Sans JP', -apple-system, 'Hiragino Sans', sans-serif; }
-  .app { max-width:480px; margin:0 auto; background:#fff; min-height:100vh; }
-  .serif { font-family: 'Noto Serif JP', serif; }
-  .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,.3); border-top-color:#c9a961; border-radius:50%; animation:spin .8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  button { font-family: inherit; }
-  input { font-family: inherit; }
+/* ============================================
+   TOPページ固有スタイル
+   ============================================ */
+
+/* ── Hero ── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;align-items:center;
+  padding:8rem clamp(1rem,4vw,2rem) 4rem;
+  overflow:hidden;
+}
+.hero__bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 70% 30%,rgba(201,168,76,0.18) 0%,transparent 55%),
+    radial-gradient(ellipse at 20% 80%,rgba(31,58,95,0.5) 0%,transparent 55%),
+    linear-gradient(180deg,var(--navy-ink) 0%,var(--navy-dark) 60%,var(--navy) 100%);
+}
+.hero__bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'><circle cx='200' cy='200' r='180' fill='none' stroke='%23C9A84C' stroke-width='0.5' opacity='0.15'/><circle cx='200' cy='200' r='140' fill='none' stroke='%23C9A84C' stroke-width='0.5' opacity='0.1'/><circle cx='200' cy='200' r='100' fill='none' stroke='%23C9A84C' stroke-width='0.5' opacity='0.08'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right -140px top 40px;
+  background-size:560px;
+  opacity:0.8;
+}
+.hero__inner{
+  position:relative;z-index:1;
+  max-width:var(--maxw);
+  width:100%;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  gap:clamp(2rem,5vw,4rem);
+  align-items:center;
+}
+.hero__label{
+  display:inline-block;
+  font-family:var(--font-serif);
+  font-size:0.78rem;
+  letter-spacing:0.5em;
+  color:var(--gold-lt);
+  margin-bottom:1.5rem;
+  padding-left:3.5rem;
+  position:relative;
+}
+.hero__label::before{
+  content:'';position:absolute;left:0;top:50%;
+  width:2.5rem;height:1px;background:var(--gold);
+}
+.hero__title{
+  font-family:var(--font-serif);
+  font-size:clamp(1.7rem,4.6vw,3.4rem);
+  font-weight:400;
+  letter-spacing:0.04em;
+  line-height:1.55;
+  margin-bottom:1.75rem;
+  word-break:keep-all;
+  overflow-wrap:normal;
+}
+.hero__title span.accent{color:var(--gold);}
+.hero__title small{
+  display:block;
+  font-size:0.32em;
+  letter-spacing:0.3em;
+  color:var(--gold-lt);
+  margin-top:1rem;
+  font-weight:300;
+  font-family:var(--font-sans);
+}
+.hero__lead{
+  font-size:1rem;
+  line-height:2.1;
+  color:rgba(255,255,255,0.78);
+  margin-bottom:2.5rem;
+  max-width:480px;
+}
+.hero__lead strong{color:var(--gold-lt);font-weight:500;}
+.hero__ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+
+.hero__visual{
+  position:relative;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+}
+.visual-eyebrow{
+  font-family:var(--font-serif);
+  font-size:0.7rem;
+  letter-spacing:0.42em;
+  color:var(--gold);
+  display:flex;align-items:center;gap:0.75rem;
+}
+.visual-eyebrow::before{
+  content:'';width:2rem;height:1px;background:var(--gold);opacity:0.7;
+}
+.scan-stage{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:1.25rem;
+  align-items:stretch;
+}
+.tomb-frame{
+  position:relative;
+  aspect-ratio:3/4;
+  background:#0a1428;
+  border:1px solid rgba(201,168,76,0.55);
+  overflow:hidden;
+}
+.tomb-img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  display:block;opacity:0.92;
+}
+.tomb-frame::before{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,18,38,0.18) 0%,rgba(10,18,38,0.05) 40%,rgba(10,18,38,0.18) 100%);
+}
+.tomb-corner{
+  position:absolute;width:14px;height:14px;
+  border:1.5px solid var(--gold);z-index:5;
+}
+.tomb-corner.tl{top:8px;left:8px;border-right:none;border-bottom:none;}
+.tomb-corner.tr{top:8px;right:8px;border-left:none;border-bottom:none;}
+.tomb-corner.bl{bottom:8px;left:8px;border-right:none;border-top:none;}
+.tomb-corner.br{bottom:8px;right:8px;border-left:none;border-top:none;}
+.scan-line{
+  position:absolute;left:0;right:0;top:0;height:2px;z-index:4;opacity:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,0.6) 20%,#FFE9A8 50%,rgba(201,168,76,0.6) 80%,transparent 100%);
+  box-shadow:0 0 12px rgba(201,168,76,0.5);
+}
+.scan-glow{
+  position:absolute;left:0;right:0;top:0;height:80px;z-index:3;opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(201,168,76,0.32) 0%,rgba(201,168,76,0.08) 60%,transparent 100%);
+}
+.results-panel{
+  display:flex;flex-direction:column;justify-content:center;gap:0.6rem;
+  font-family:var(--font-sans);
+}
+.result-bubble{
+  background:rgba(255,255,255,0.97);
+  color:var(--navy-dark);
+  padding:0.7rem 0.9rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.78rem;
+  border-left:2px solid var(--gold);
+  opacity:0;transform:translateX(-14px);
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+.result-bubble .label{color:#6c7a99;font-size:0.65rem;letter-spacing:0.15em;}
+.result-bubble .value{font-weight:500;font-size:0.78rem;letter-spacing:0.05em;}
+.result-bubble .value.warning{color:#b8860b;}
+.result-bubble .value.danger{color:#a0392f;}
+.plan-badge{
+  background:var(--gold);color:var(--navy-dark);
+  padding:0.85rem 1rem;font-family:var(--font-serif);
+  text-align:center;margin-top:0.25rem;
+  opacity:0;transform:translateY(8px);
+  box-shadow:0 4px 16px rgba(201,168,76,0.25);
+}
+.plan-badge .small{display:block;font-size:0.58rem;letter-spacing:0.3em;margin-bottom:4px;opacity:0.78;}
+.plan-badge .main{font-size:0.95rem;font-weight:500;letter-spacing:0.12em;}
+.scan-cta{
+  padding:1rem 1.1rem;
+  background:rgba(255,255,255,0.05);
+  border:0.5px solid rgba(201,168,76,0.35);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.scan-cta-text{
+  color:#fff;font-family:var(--font-serif);
+  font-size:0.85rem;line-height:1.55;flex:1;min-width:180px;
+}
+.scan-cta-text .gold{color:var(--gold);font-weight:500;}
+.scan-cta-sub{font-size:0.72rem;color:#d8dde8;}
+.scan-cta-btn{
+  background:transparent;border:1px solid var(--gold);color:var(--gold);
+  padding:0.7rem 1.2rem;font-family:var(--font-serif);
+  font-size:0.78rem;letter-spacing:0.12em;
+  white-space:nowrap;transition:all .25s ease;
+  text-decoration:none;
+}
+.scan-cta-btn:hover{background:var(--gold);color:var(--navy-dark);}
+
+@media (prefers-reduced-motion: no-preference){
+  .scan-line{animation:scanLine 7s ease-in-out infinite;}
+  .scan-glow{animation:scanGlow 7s ease-in-out infinite;}
+  .result-bubble.b1{animation:bubbleIn 7s ease-out infinite;animation-delay:0s;}
+  .result-bubble.b2{animation:bubbleIn 7s ease-out infinite;animation-delay:0.7s;}
+  .result-bubble.b3{animation:bubbleIn 7s ease-out infinite;animation-delay:1.4s;}
+  .result-bubble.b4{animation:bubbleIn 7s ease-out infinite;animation-delay:2.1s;}
+  .plan-badge{animation:badgeIn 7s ease-out infinite;}
+}
+@keyframes scanLine{
+  0%{transform:translateY(0);opacity:0;}
+  6%{opacity:1;}
+  60%{transform:translateY(99%);opacity:1;}
+  66%{transform:translateY(99%);opacity:0;}
+  100%{transform:translateY(0);opacity:0;}
+}
+@keyframes scanGlow{
+  0%{transform:translateY(-80px);opacity:0;}
+  6%{opacity:0.9;}
+  60%{transform:translateY(100%);opacity:0.9;}
+  66%{transform:translateY(100%);opacity:0;}
+  100%{transform:translateY(-80px);opacity:0;}
+}
+@keyframes bubbleIn{
+  0%{opacity:0;transform:translateX(-14px);}
+  10%{opacity:1;transform:translateX(0);}
+  88%{opacity:1;transform:translateX(0);}
+  95%{opacity:0;transform:translateX(-14px);}
+  100%{opacity:0;transform:translateX(-14px);}
+}
+@keyframes badgeIn{
+  0%,65%{opacity:0;transform:translateY(8px);}
+  72%{opacity:1;transform:translateY(0);}
+  90%{opacity:1;transform:translateY(0);}
+  96%{opacity:0;transform:translateY(8px);}
+  100%{opacity:0;transform:translateY(8px);}
+}
+
+.hero__scroll{
+  position:absolute;bottom:2rem;left:50%;
+  transform:translateX(-50%);z-index:2;
+  font-size:0.65rem;letter-spacing:0.3em;
+  color:rgba(255,255,255,0.5);
+  writing-mode:vertical-rl;
+  padding-bottom:60px;
+}
+.hero__scroll::after{
+  content:'';position:absolute;left:50%;bottom:0;
+  width:1px;height:50px;background:var(--gold);
+  animation:scrollLine 2.2s ease infinite;
+  transform-origin:top;
+}
+@keyframes scrollLine{
+  0%{transform:scaleY(0);transform-origin:top;}
+  50%{transform:scaleY(1);transform-origin:top;}
+  51%{transform:scaleY(1);transform-origin:bottom;}
+  100%{transform:scaleY(0);transform-origin:bottom;}
+}
+
+@media(max-width:860px){
+  .hero__inner{grid-template-columns:1fr;}
+  .hero__visual{max-width:460px;margin:0 auto;}
+  .hero__scroll{display:none;}
+  .hero__label{padding-left:2.5rem;letter-spacing:0.35em;}
+  .hero__label::before{width:1.75rem;}
+  .scan-stage{grid-template-columns:minmax(0,0.9fr) minmax(0,1fr);gap:1rem;}
+}
+@media(max-width:560px){
+  .scan-stage{grid-template-columns:1fr;gap:1rem;}
+  .tomb-frame{max-width:280px;margin:0 auto;width:100%;}
+}
+
+/* ============================================
+   Intro（想いの導入）
+   ============================================ */
+.intro{
+  position:relative;
+  background:var(--navy-dark);
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem) clamp(2rem,4vw,3rem);
+  text-align:center;
+}
+.intro__inner{max-width:760px;margin:0 auto;}
+.intro__kanji{
+  font-family:var(--font-serif);
+  font-size:clamp(3rem,7vw,5rem);
+  color:var(--gold-lt);
+  opacity:0.72;
+  letter-spacing:0.5em;
+  margin-bottom:-2rem;
+  user-select:none;
+  text-shadow:0 0 32px rgba(201,168,76,0.35);
+}
+.intro__title{
+  font-family:var(--font-serif);
+  font-size:clamp(1.4rem,3.2vw,2rem);
+  font-weight:400;
+  letter-spacing:0.15em;
+  line-height:1.9;
+  margin-bottom:2rem;
+}
+.intro__body{
+  font-size:1.08rem;
+  line-height:2.2;
+  color:rgba(255,255,255,0.85);
+  margin-bottom:2rem;
+}
+@media(min-width:860px){.intro__body{font-size:1rem;}}
+.intro__sign{
+  font-family:var(--font-serif);
+  font-size:1.35rem;
+  letter-spacing:0.25em;
+  color:var(--gold-lt);
+  margin-top:-0.5rem;
+}
+.intro__areas{
+  margin-top:2.2rem;
+  padding:1.6rem 1.4rem;
+  background:rgba(201,168,76,0.06);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:4px;
+  text-align:left;
+}
+.intro__areas-body{
+  font-size:1rem;
+  line-height:2.05;
+  color:rgba(255,255,255,0.88);
+}
+.intro__areas-body strong{
+  color:var(--gold-lt);
+  font-weight:500;
+}
+.intro__areas-note{
+  margin-top:1rem;
+  padding-top:1rem;
+  border-top:1px dashed rgba(201,168,76,0.22);
+  font-size:0.95rem;
+  line-height:1.95;
+  color:rgba(255,255,255,0.72);
+}
+@media(min-width:860px){
+  .intro__areas{padding:1.8rem 2rem;text-align:center;}
+}
+
+/* ============================================
+   Services
+   ============================================ */
+.services{
+  background:linear-gradient(180deg,var(--navy-dark) 0%,var(--navy-ink) 100%);
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem);
+}
+.services__grid{
+  max-width:var(--maxw);margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+@media(max-width:860px){
+  .services__grid{grid-template-columns:1fr;}
+}
+.service-card{
+  position:relative;
+  background:linear-gradient(160deg,rgba(36,51,88,0.6) 0%,rgba(15,28,53,0.8) 100%);
+  border:1px solid rgba(201,168,76,0.2);
+  padding:2.5rem 2rem 2rem;
+  transition:all 0.4s ease;
+  overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.service-card:hover{
+  border-color:var(--gold);
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.service-card:hover::before{opacity:1;}
+.service-card__num{
+  font-family:var(--font-serif);
+  font-size:0.7rem;letter-spacing:0.35em;
+  color:var(--gold-lt);opacity:0.7;
+  margin-bottom:1rem;
+}
+.service-card__glyph{
+  width:70px;height:70px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif);
+  font-size:1.8rem;
+  color:var(--gold);
+  margin-bottom:1.75rem;
+  background:rgba(201,168,76,0.05);
+}
+.service-card__title{
+  font-family:var(--font-serif);
+  font-size:1.5rem;font-weight:500;
+  letter-spacing:0.1em;
+  margin-bottom:1rem;
+}
+.service-card__title small{
+  display:block;
+  font-family:var(--font-sans);
+  font-size:0.6rem;letter-spacing:0.3em;
+  color:var(--gold-lt);margin-top:4px;font-weight:400;
+}
+.service-card__desc{
+  font-size:1rem;
+  line-height:2;
+  color:rgba(255,255,255,0.8);
+  margin-bottom:1.5rem;
+}
+.service-card__price{
+  font-family:var(--font-serif);
+  font-size:1rem;
+  color:var(--gold-lt);
+  padding:0.75rem 0;
+  border-top:1px dashed rgba(201,168,76,0.3);
+  border-bottom:1px dashed rgba(201,168,76,0.3);
+  margin-bottom:1.5rem;
+  letter-spacing:0.08em;
+}
+.service-card__price strong{
+  color:var(--gold);
+  font-size:1.35rem;font-weight:400;
+  margin:0 4px;
+}
+.service-card__link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-serif);
+  font-size:0.82rem;
+  color:var(--gold-lt);
+  letter-spacing:0.15em;
+  transition:gap 0.25s;
+}
+.service-card__link:hover{gap:14px;color:var(--gold);}
+
+/* ============================================
+   Kodawari（こだわり・3本柱）
+   ============================================ */
+.kodawari{
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem);
+  background:var(--navy-ink);
+  position:relative;
+}
+.kodawari__grid{
+  max-width:var(--maxw);margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2rem;
+}
+@media(max-width:860px){.kodawari__grid{grid-template-columns:1fr;}}
+.kodawari-item{
+  text-align:center;
+  padding:0 1rem;
+}
+.kodawari-item__num{
+  font-family:var(--font-serif);
+  font-size:2.8rem;
+  color:var(--gold);
+  opacity:0.85;
+  letter-spacing:0.1em;
+  margin-bottom:0.5rem;
+  font-weight:300;
+}
+.kodawari-item__num small{
+  display:block;
+  font-size:0.3em;letter-spacing:0.4em;
+  color:var(--gold-lt);opacity:0.7;
+  margin-bottom:8px;
+}
+.kodawari-item__title{
+  font-family:var(--font-serif);
+  font-size:1.3rem;font-weight:500;
+  letter-spacing:0.15em;
+  margin-bottom:1rem;
+  padding-bottom:1rem;
+  position:relative;
+}
+.kodawari-item__title::after{
+  content:'';position:absolute;left:50%;bottom:0;
+  transform:translateX(-50%);
+  width:32px;height:1px;background:var(--gold);
+}
+.kodawari-item__body{
+  font-size:1rem;
+  line-height:2;
+  color:rgba(255,255,255,0.8);
+  text-align:left;
+}
+
+/* ============================================
+   Episode（エピソード — 縦書き × 横書き mix）
+   ============================================ */
+.episode{
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem);
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(201,168,76,0.08) 0%,transparent 50%),
+    var(--navy-dark);
+  position:relative;overflow:hidden;
+}
+.episode::before{
+  content:'私と墓石';
+  position:absolute;top:20%;right:-4%;
+  font-family:var(--font-serif);
+  font-size:clamp(8rem,16vw,14rem);
+  color:rgba(201,168,76,0.04);
+  writing-mode:vertical-rl;
+  letter-spacing:0.1em;
+  pointer-events:none;
+  font-weight:300;
+}
+.episode__inner{
+  max-width:780px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.episode__body{
+  font-size:1.08rem;
+  line-height:2.3;
+  color:rgba(255,255,255,0.88);
+}
+.episode__body p{
+  margin-bottom:1.5rem;
+  text-align:justify;
+}
+.episode__body p.lead{
+  font-family:var(--font-serif);
+  font-size:1.28rem;
+  font-weight:400;
+  color:var(--white);
+  line-height:2.1;
+  letter-spacing:0.05em;
+  padding-left:1.25rem;
+  border-left:2px solid var(--gold);
+  margin-bottom:2.5rem;
+}
+.episode__body strong{
+  color:var(--gold-lt);
+  font-weight:500;
+  padding:0 2px;
+}
+.episode__body em{
+  font-style:normal;
+  color:var(--gold);
+  font-family:var(--font-serif);
+  background:linear-gradient(transparent 70%,rgba(201,168,76,0.15) 70%);
+  padding:0 2px;
+}
+.episode__closing{
+  margin-top:3rem;
+  padding:2rem;
+  border:1px solid rgba(201,168,76,0.3);
+  background:rgba(201,168,76,0.04);
+  text-align:center;
+  font-family:var(--font-serif);
+  font-size:1.15rem;
+  line-height:2;
+  letter-spacing:0.08em;
+  color:var(--gold-lt);
+}
+.episode__closing strong{color:var(--gold);font-weight:500;}
+
+.episode__toggle{
+  display:block;margin:2.5rem auto 0;
+  padding:0.8rem 2rem;
+  background:transparent;
+  border:1px solid rgba(201,168,76,0.4);
+  color:var(--gold-lt);
+  font-family:var(--font-serif);
+  font-size:0.85rem;letter-spacing:0.2em;
+  border-radius:99px;
+  transition:0.25s;
+}
+.episode__toggle:hover{background:rgba(201,168,76,0.08);border-color:var(--gold);color:var(--gold);}
+.episode__more{display:none;}
+.episode__more.open{display:block;}
+
+/* ============================================
+   Flow（施工の流れ）
+   ============================================ */
+.flow{
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem);
+  background:var(--navy-ink);
+}
+.flow__list{
+  max-width:820px;margin:0 auto;
+  position:relative;
+}
+.flow__list::before{
+  content:'';position:absolute;
+  left:32px;top:24px;bottom:24px;
+  width:1px;background:rgba(201,168,76,0.25);
+}
+.flow-step{
+  display:grid;
+  grid-template-columns:72px 1fr;
+  gap:1.5rem;
+  margin-bottom:2rem;
+  align-items:start;
+  position:relative;
+}
+.flow-step__mark{
+  width:64px;height:64px;
+  border-radius:50%;
+  background:var(--navy-dark);
+  border:1.5px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif);
+  font-size:1rem;
+  color:var(--gold);
+  flex-shrink:0;
+  position:relative;z-index:1;
+  letter-spacing:0.05em;
+}
+.flow-step__mark small{
+  display:block;
+  font-size:0.5rem;letter-spacing:0.2em;
+  color:var(--gold-lt);opacity:0.7;
+  margin-bottom:2px;
+}
+.flow-step__body{
+  padding-top:0.5rem;
+}
+.flow-step__title{
+  font-family:var(--font-serif);
+  font-size:1.25rem;font-weight:500;
+  letter-spacing:0.1em;
+  margin-bottom:0.6rem;
+  color:var(--white);
+}
+.flow-step__desc{
+  font-size:1rem;
+  line-height:2;
+  color:rgba(255,255,255,0.78);
+}
+
+/* ============================================
+   CTA（LINE中心）
+   ============================================ */
+.cta{
+  padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,2rem);
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.15) 0%,transparent 50%),
+    linear-gradient(180deg,var(--navy-ink) 0%,var(--navy-dark) 100%);
+  text-align:center;
+}
+.cta__inner{max-width:620px;margin:0 auto;}
+.cta__title{
+  font-family:var(--font-serif);
+  font-size:clamp(1.6rem,3.8vw,2.3rem);
+  font-weight:400;
+  letter-spacing:0.12em;
+  line-height:1.8;
+  margin-bottom:1.25rem;
+}
+.cta__title span{color:var(--gold);}
+.cta__body{
+  font-size:1.05rem;
+  line-height:2.1;
+  color:rgba(255,255,255,0.85);
+  margin-bottom:2.5rem;
+}
+.cta__buttons{
+  display:flex;flex-direction:column;gap:1rem;
+  max-width:360px;margin:0 auto;
+}
+.cta__note{
+  margin-top:1.5rem;
+  font-size:0.88rem;
+  color:rgba(255,255,255,0.65);
+  letter-spacing:0.08em;
+}
+
+/* ============================================
+   Tweaks panel
+   ============================================ */
+.tweaks-panel{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;
+  background:rgba(15,28,53,0.96);
+  backdrop-filter:blur(14px);
+  border:1px solid var(--gold);
+  padding:1.25rem 1.4rem 1.1rem;
+  border-radius:8px;
+  min-width:260px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.6);
+  font-family:var(--font-sans);
+  display:none;
+}
+.tweaks-panel.open{display:block;}
+.tweaks-panel h5{
+  font-family:var(--font-serif);
+  font-size:0.82rem;
+  color:var(--gold-lt);
+  letter-spacing:0.25em;
+  margin-bottom:1rem;
+  padding-bottom:0.6rem;
+  border-bottom:1px solid rgba(201,168,76,0.2);
+}
+.tweaks-panel .tweak-row{
+  margin-bottom:0.9rem;
+}
+.tweaks-panel label{
+  display:block;
+  font-size:0.7rem;letter-spacing:0.1em;
+  color:rgba(255,255,255,0.6);
+  margin-bottom:0.4rem;
+}
+.tweaks-panel .seg{
+  display:grid;grid-auto-flow:column;grid-auto-columns:1fr;
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:4px;overflow:hidden;
+}
+.tweaks-panel .seg button{
+  padding:0.5rem 0.6rem;
+  font-size:0.72rem;
+  background:transparent;
+  color:rgba(255,255,255,0.7);
+  border-right:1px solid rgba(201,168,76,0.15);
+  transition:0.2s;
+}
+.tweaks-panel .seg button:last-child{border-right:none;}
+.tweaks-panel .seg button.active{
+  background:var(--gold);color:var(--navy-dark);font-weight:700;
+}
+.tweaks-panel .seg button:hover:not(.active){background:rgba(201,168,76,0.1);}
+
+/* ============================================
+   Variant B — 伝統色ビビッド
+   ============================================ */
+body.variant-b{
+  --navy-dark:#0C1F2E;
+  --navy-ink:#071522;
+  --navy:#143145;
+  --navy-mid:#1C4360;
+}
+body.variant-b .hero__bg{
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(183,67,59,0.2) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 70%,rgba(123,143,78,0.18) 0%,transparent 55%),
+    linear-gradient(180deg,#071522 0%,#0c1f2e 60%,#143145 100%);
+}
+body.variant-b .hero__title span.accent,
+body.variant-b .hero-kanji,
+body.variant-b .section-head__title span,
+body.variant-b .cta__title span,
+body.variant-b .service-card__glyph,
+body.variant-b .kodawari-item__num{
+  color:#D4A657;
+}
+body.variant-b .episode__body p.lead{border-left-color:#B7433B;}
+body.variant-b .episode__body em{
+  color:#D4A657;
+  background:linear-gradient(transparent 70%,rgba(183,67,59,0.2) 70%);
+}
+body.variant-b .service-card:nth-child(1){border-top:3px solid var(--ai);}
+body.variant-b .service-card:nth-child(2){border-top:3px solid var(--akane);}
+body.variant-b .service-card:nth-child(3){border-top:3px solid var(--matcha);}
+
+/* ============================================
+   Variant C — 和紙クリーム（明るい基調）
+   ============================================ */
+body.variant-c{
+  --navy-dark:#F5F0E8;
+  --navy-ink:#EAE3D5;
+  --navy:#FDFAF6;
+  --navy-mid:#DCD3C0;
+  --white:#2C2C2C;
+  --gold:#8B6A1F;
+  --gold-lt:#A3853A;
+  --gold-dk:#6B5116;
+  color:#2C2C2C;
+}
+body.variant-c .site-header{
+  background:rgba(253,250,246,0.92);
+  border-bottom:1px solid rgba(139,106,31,0.2);
+}
+body.variant-c .brand__name{color:#2C2C2C;}
+body.variant-c .nav a{color:rgba(44,44,44,0.75);}
+body.variant-c .nav__cta{color:#FDFAF6 !important;}
+body.variant-c .hero__bg{
+  background:
+    radial-gradient(ellipse at 70% 30%,rgba(139,106,31,0.15) 0%,transparent 55%),
+    radial-gradient(ellipse at 20% 80%,rgba(183,67,59,0.08) 0%,transparent 55%),
+    linear-gradient(180deg,#FDFAF6 0%,#F5F0E8 60%,#EAE3D5 100%);
+}
+body.variant-c .hero__title,
+body.variant-c .section-head__title,
+body.variant-c .cta__title,
+body.variant-c .intro__title{color:#2C2C2C;}
+body.variant-c .hero__lead,
+body.variant-c .intro__body,
+body.variant-c .section-head__sub,
+body.variant-c .service-card__desc,
+body.variant-c .kodawari-item__body,
+body.variant-c .episode__body,
+body.variant-c .flow-step__desc,
+body.variant-c .cta__body{color:rgba(44,44,44,0.75);}
+body.variant-c .service-card{
+  background:linear-gradient(160deg,rgba(253,250,246,0.95) 0%,rgba(234,227,213,0.6) 100%);
+  border-color:rgba(139,106,31,0.25);
+}
+body.variant-c .service-card__title,
+body.variant-c .flow-step__title,
+body.variant-c .service-card__link{color:#2C2C2C;}
+body.variant-c .episode__body p.lead{color:#2C2C2C;}
+body.variant-c .site-footer{background:#EAE3D5;}
+body.variant-c .site-footer__desc,
+body.variant-c .site-footer a{color:rgba(44,44,44,0.7);}
+body.variant-c .site-footer__bottom{color:rgba(44,44,44,0.5);}
 </style>
 </head>
 <body>
-<div id="app" class="app"></div>
+
+<!-- Tweak defaults (edit mode) -->
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "variant": "a",
+  "show_full_episode": false
+}/*EDITMODE-END*/;
+</script>
+
+<!-- ============================================
+     Header
+     ============================================ -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="#top" class="brand">
+      <div class="brand__mark" role="img" aria-label="みやこ磨き"></div>
+      <div class="brand__name">みやこ磨き<small>MIYAKO MIGAKI</small></div>
+    </a>
+    <button class="nav-toggle" aria-label="メニュー" onclick="this.classList.toggle('open');document.querySelector('.nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <a href="#service">サービス</a>
+      <a href="#kodawari">こだわり</a>
+      <a href="#flow">ご依頼の流れ</a>
+      <a href="#episode">私の話</a>
+      <a href="pages/before-after.html">施工事例</a>
+      <a href="#contact" class="nav__cta">LINEで相談</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================
+     Hero
+     ============================================ -->
+<section class="hero" id="top">
+  <div class="hero__bg"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <span class="hero__label">KYOTO &nbsp;·&nbsp; BOSEKI &nbsp;MIGAKI</span>
+      <h1 class="hero__title">
+        ご先祖様のお墓を、<br>
+        <span class="accent">本来の姿</span>へ。
+      </h1>
+      <p class="hero__lead">
+        京都・北大阪・滋賀で墓石クリーニング・お墓参り代行を承ります。<small style="font-size:0.82em;opacity:0.75;">（※対応エリア詳細は下記）</small><br>
+        <strong>石の種類を見極め、汚れに応じた専用の薬剤と手順で</strong>、ご先祖様のお墓を静かに磨き上げます。
+      </p>
+      <div class="hero__ctas">
+        <a href="#contact" class="btn btn--primary">LINEで無料相談する</a>
+        <a href="#service" class="btn btn--ghost">サービスを見る</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="visual-eyebrow"><span>KYOTO ・ AI BOSEKI DIAGNOSIS</span></div>
+      <div class="scan-stage">
+        <div class="tomb-frame">
+          <span class="tomb-corner tl"></span>
+          <span class="tomb-corner tr"></span>
+          <span class="tomb-corner bl"></span>
+          <span class="tomb-corner br"></span>
+          <img src="assets/tomb_for_lp.jpg" alt="お墓の健康診断" class="tomb-img">
+          <div class="scan-glow"></div>
+          <div class="scan-line"></div>
+        </div>
+        <div class="results-panel">
+          <div class="result-bubble b1"><span class="label">石　　種</span><span class="value">御　影　石</span></div>
+          <div class="result-bubble b2"><span class="label">苔　汚　れ</span><span class="value warning">中　　度</span></div>
+          <div class="result-bubble b3"><span class="label">水　　垢</span><span class="value warning">中　　度</span></div>
+          <div class="result-bubble b4"><span class="label">経　年</span><span class="value">約　６０　年</span></div>
+          <div class="plan-badge">
+            <span class="small">ご推奨プラン</span>
+            <span class="main">松 — 特上仕上げ</span>
+          </div>
+        </div>
+      </div>
+      <div class="scan-cta">
+        <div class="scan-cta-text">
+          あなたのお墓も、<span class="gold">AIが30秒で無料診断</span><br>
+          <span class="scan-cta-sub">お写真を1枚送るだけ。LINEで完結します。</span>
+        </div>
+        <a href="#contact" class="scan-cta-btn">LINEで試す　→</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero__scroll">SCROLL</div>
+</section>
+
+<!-- ============================================
+     Intro
+     ============================================ -->
+<section class="intro" id="intro">
+  <div class="intro__inner">
+    <div class="intro__kanji">一期一会</div>
+    <h2 class="intro__title">
+      お墓は、ご先祖様との<br>対話の場所でございます。
+    </h2>
+    <p class="intro__body">
+      長い年月のうちに石肌はくすみ、苔や水垢がご先祖様の御名を覆っていきます。<br>
+      「きれいにして差し上げたい」――そのお気持ちに、確かな技術でお応えいたします。<br>
+      作業の前にはご先祖様に合掌し、完了後にはお写真でご報告を。<br>
+      京都より、心を込めた一手間を。
+    </p>
+    <div class="kamon-divider">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    </div>
+    <p class="intro__sign">― みやこ磨き ―</p>
+    <div class="intro__areas">
+      <p class="intro__areas-body">
+        <strong>京都市全域・京都府南部・北摂（高槻～豊中）・北河内（枇方～門真）・滋賀県湖南エリア（大津～野洲）</strong>を中心に対応しております。<br>
+        上記以外の地域もお気軽にご相談ください。
+      </p>
+      <p class="intro__areas-note">
+        また、関東エリア（東京・神奈川・千葉・埼玉・群馬・栃木）でのご依頼は、提携業者をご紹介させていただきます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     Services
+     ============================================ -->
+<section class="services" id="service">
+  <div class="section-head">
+    <span class="section-head__label">SERVICES</span>
+    <h2 class="section-head__title">承る<span>お手入れ</span></h2>
+    <p class="section-head__sub">墓石の状態とお客様のご要望に合わせて、<br>三つのサービスをご用意しております。</p>
+  </div>
+
+  <div class="services__grid">
+    <article class="service-card">
+      <div class="service-card__num">SERVICE 01</div>
+      <div class="service-card__glyph">洗</div>
+      <h3 class="service-card__title">墓石クリーニング<small>BOSEKI CLEANING</small></h3>
+      <p class="service-card__desc">
+        石の種類を見極め、水垢・苔・黒ずみを汚れに応じた専用薬剤で除去。
+        石材本来の色合いと文字の刻みを蘇らせます。
+      </p>
+      <div class="service-card__price">
+        一般墓　<strong>¥22,000</strong>〜／基
+      </div>
+      <a href="pages/before-after.html#service-1" class="service-card__link">ビフォーアフターを見る →</a>
+    </article>
+
+    <article class="service-card">
+      <div class="service-card__num">SERVICE 02</div>
+      <div class="service-card__glyph">艶</div>
+      <h3 class="service-card__title">コーティング施工<small>STONE COATING</small></h3>
+      <p class="service-card__desc">
+        洗浄後に専用の撥水コーティングを施工。汚れの付着を抑制し、
+        光沢を1〜2年にわたり長くお保ちいただけます。
+      </p>
+      <div class="service-card__price">
+        洗浄＋コーティング　<strong>¥38,000</strong>〜
+      </div>
+      <a href="pages/before-after.html#service-2" class="service-card__link">仕上がりを見る →</a>
+    </article>
+
+    <article class="service-card">
+      <div class="service-card__num">SERVICE 03</div>
+      <div class="service-card__glyph">参</div>
+      <h3 class="service-card__title">お墓参り代行<small>OMAIRI DAIKO</small></h3>
+      <p class="service-card__desc">
+        遠方のご家族に代わり、お花・お線香・簡易清掃をセットで代行。
+        完了後にLINEまたはメールにて、現地の写真をご報告いたします。
+      </p>
+      <div class="service-card__price">
+        お参り代行　<strong>¥8,800</strong>〜／回
+      </div>
+      <a href="pages/before-after.html#service-3" class="service-card__link">代行内容を見る →</a>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================
+     Kodawari（こだわり）
+     ============================================ -->
+<section class="kodawari" id="kodawari">
+  <div class="section-head">
+    <span class="section-head__label">OUR CRAFT</span>
+    <h2 class="section-head__title">三つの<span>こだわり</span></h2>
+  </div>
+
+  <div class="kodawari__grid">
+    <div class="kodawari-item">
+      <div class="kodawari-item__num"><small>ONE</small>壱</div>
+      <h3 class="kodawari-item__title">石を見極める</h3>
+      <p class="kodawari-item__body">
+        御影石・安山岩・大理石――石種により性質はまったく異なります。
+        研修で叩き込まれた判断基準で石を見極め、最適な洗浄方法を選定。
+        「善意で大切なお墓を傷つけない」ことを何より大切にしております。
+      </p>
+    </div>
+    <div class="kodawari-item">
+      <div class="kodawari-item__num"><small>TWO</small>弐</div>
+      <h3 class="kodawari-item__title">汚れに応じた手順</h3>
+      <p class="kodawari-item__body">
+        コケにはコケ用、水垢には水垢用――汚れの種類に応じた専用薬剤と
+        手順を使い分けます。一つでも誤れば石の寿命に影響する。
+        だからこそ、仕上がりだけでなく、石本来の力を損なわない施工を。
+      </p>
+    </div>
+    <div class="kodawari-item">
+      <div class="kodawari-item__num"><small>THREE</small>参</div>
+      <h3 class="kodawari-item__title">始めと終わりの所作</h3>
+      <p class="kodawari-item__body">
+        作業の前にはご先祖様に合掌し、完了後には写真で品質を確認。
+        一連の所作すべてに意味がある――研修で学んだこの姿勢を、
+        一基一基のお墓に向き合うたびに大切にしております。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     Flow
+     ============================================ -->
+<section class="flow" id="flow">
+  <div class="section-head">
+    <span class="section-head__label">FLOW</span>
+    <h2 class="section-head__title">ご依頼の<span>流れ</span></h2>
+    <p class="section-head__sub">お問い合わせから施工完了まで、<br>六つのステップで丁寧にご案内いたします。</p>
+  </div>
+
+  <div class="flow__list">
+    <div class="flow-step">
+      <div class="flow-step__mark"><div><small>STEP</small>01</div></div>
+      <div class="flow-step__body">
+        <h3 class="flow-step__title">霊園・寺院へのご確認</h3>
+        <p class="flow-step__desc">まずはお墓のある霊園事務所・菩提寺様へ「外部のクリーニング業者に依頼しても差し支えないか」「指定業者の定めはないか」をご確認ください。寺社によっては指定業者制を取られている場合があり、事前確認がトラブル防止の第一歩となります。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step__mark"><div><small>STEP</small>02</div></div>
+      <div class="flow-step__body">
+        <h3 class="flow-step__title">簡易お見積もり</h3>
+        <p class="flow-step__desc">LINE公式アカウントより、簡易見積もりアプリをご利用いただけます。お墓の寸法・石種・状態をご入力いただくと、目安の金額が画面上でご確認いただけます。お気軽にお試しください。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step__mark"><div><small>STEP</small>03</div></div>
+      <div class="flow-step__body">
+        <h3 class="flow-step__title">正式お見積もり（無料）</h3>
+        <p class="flow-step__desc">ご発注の意思がございましたら、お墓のお写真をLINEにてお送りください。汚れの状態・石種を確認のうえ、正式なお見積もりを無料でご提示いたします。ご納得いただいた上でのご契約となります。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step__mark"><div><small>STEP</small>04</div></div>
+      <div class="flow-step__body">
+        <h3 class="flow-step__title">施工日のご予約</h3>
+        <p class="flow-step__desc">墓石クリーニングは天候に大きく左右される作業です。雨天順延の可能性を含め、概ね<strong>二週間ほどの幅を持たせて</strong>ご予約日程を調整させていただきます。仕上がりの品質を守るため、どうかご理解いただけますと幸いです。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step__mark"><div><small>STEP</small>05</div></div>
+      <div class="flow-step__body">
+        <h3 class="flow-step__title">ご注文確定・お支払い</h3>
+        <p class="flow-step__desc">ご注文が確定しましたら、お支払い方法をご案内いたします。銀行振込・PayPay・クレジットカードにてお受けしております。ご都合のよい方法をお選びください。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step__mark"><div><small>STEP</small>06</div></div>
+      <div class="flow-step__body">
+        <h3 class="flow-step__title">施工・お写真にてご報告</h3>
+        <p class="flow-step__desc">作業前にはご先祖様に合掌し、石種に合わせた薬剤で丁寧に施工いたします。完了後はビフォーアフターのお写真をLINEにてご報告。ご遠方の方にも、仕上がりをその場でご確認いただけます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     Episode（私と墓石クリーニング）
+     ============================================ -->
+<section class="episode" id="episode">
+  <div class="section-head">
+    <span class="section-head__label">MY STORY</span>
+    <h2 class="section-head__title">私と墓石<span>クリーニング</span></h2>
+    <p class="section-head__sub">― お墓が教えてくれたこと ―</p>
+  </div>
+
+  <div class="episode__inner">
+    <div class="episode__body">
+      <p class="lead">
+        20代の頃、私は会計事務所に就職しました。しかし、過酷な労働環境と様々な事情が重なり、2年と持たずに退職。社会人として一人前にやり遂げたという実感もないまま、再び就職活動に向き合うことになりました。
+      </p>
+      <p>
+        いわゆる就職氷河期の真っ只中です。周囲を見渡しても、職場で心身をすり減らしている先輩の話が耳に入り、社会に対する漠然とした絶望感がありました。「早く何者かにならなければ」という焦りと、どこにもぶつけようのない悲壮感。あの頃の私は、そんな感情に静かに追い詰められていたように思います。
+      </p>
+      <p>
+        無職の期間中、私は<strong>週に何度もお墓参りに通いました</strong>。
+      </p>
+      <p>
+        曽祖父の代に建てられたという我が家のお墓は、周囲と比べると少し小さく、長い年月のせいか石肌はくすみ、正直に言えばパッとしない佇まいでした。誰が見ても立派だと感じるようなお墓ではなかったと思います。
+      </p>
+      <p>
+        それでも、手を合わせることを繰り返すうちに、不思議と心のざわつきが静まっていくのを感じました。焦燥感や悲壮感といった負の感情が、少しずつ薄らいでいくのです。<em>ご先祖様に向き合い、敬い、大切にするという行いそのものが、知らず知らずのうちに自分の心を支えてくれていた</em>のかもしれません。
+      </p>
+
+      <div class="episode__more" id="episodeMore">
+        <p>
+          その後、ご縁があって就職した職場では15年のキャリアを積むことができました。幅広い実務を経験し、それが確かな土台となって、その後の転職でも20代の頃のような苦しさに苛まれることはなくなりました。
+        </p>
+        <p>
+          ある日、墓石クリーニングサービスの広告が目に留まりました。今思えば不思議なのですが、「利用したい」ではなく<strong>「自分でできるようになりたい」</strong>と感じたのです。気がつけば夢中で情報を調べ、研修に申し込んでいました。
+        </p>
+        <p>
+          研修で最初に学んだのは、「石の種類を見極めること」でした。墓石には御影石、安山岩、大理石など様々な石種があり、それぞれ性質がまったく異なります。たとえば、御影石に使える洗浄剤でも、大理石に使えば表面が溶けてしまうことがあります。酸性の洗剤を安易に使えば取り返しのつかない変色を起こすこともあります。<em>「きれいにしたい」という善意が、知識なく行えばかえって大切なお墓を傷つけてしまう</em>――その怖さを、研修の初日に叩き込まれました。
+        </p>
+        <p>
+          コケにはコケ用、水垢には水垢用と、汚れの種類に応じた専用の薬剤と手順があります。その選択を一つでも誤れば、仕上がりだけでなく石そのものの寿命にも影響が出ます。作業の前にはご先祖様に合掌し、完了後には写真で品質を確認する――研修では、そうした一連の所作すべてに意味があることを学びました。
+        </p>
+        <p>
+          研修を経て、実際に我が家のお墓をクリーニングしてみると――驚きました。あのくすんでいた石肌から、数十年分の汚れが落ち、本来の白さが蘇ったのです。見慣れていたからこそ気づけなかった汚れ。周囲のお墓と比べて感じていた見劣りも、嘘のようになくなっていました。慣れとは怖いものですね。
+        </p>
+        <p>
+          物理的に汚れを落としたのですから、明るくなるのは当然のことです。でも、それ以上に胸に広がったのは、<strong>「ご先祖様をきれいにして差し上げられた」</strong>という、静かな誇らしさでした。あの無職の日々に何度も手を合わせたお墓が、今度は自分の手で生まれ変わった。そのことが、理屈を超えて、深く心に響いたのでしょうね。
+        </p>
+        <p>
+          それ以来、実家のお墓は定期的に自分の手でクリーニングを続けています。季節ごとに汚れの付き方は変わりますし、手を動かすたびに新しい気づきがあります。また、研修先にもお手伝いに伺い、様々な石種や状態のお墓に触れる機会をいただいています。現場の数だけ学びがある。この仕事は、一度覚えて終わりではなく、経験を重ねるほどに技術と判断力が磨かれていくものだと実感しています。
+        </p>
+      </div>
+
+      <button class="episode__toggle" id="episodeToggle" onclick="toggleEpisode()">続きを読む &nbsp;▾</button>
+
+      <div class="episode__closing">
+        皆様にも、ふとご先祖様との思い出に<br>
+        想いを馳せる瞬間があるかと思います。<br>
+        そんなとき、お墓をきれいにして差し上げてみてください。<br>
+        きっと、<strong>ご先祖様だけでなく、<br>ご自身の心も少し明るくなる</strong>はずです。<br><br>
+        私はそのお手伝いを<br>させていただきたいと思っています。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CTA / Contact
+     ============================================ -->
+<section class="cta" id="contact">
+  <div class="cta__inner">
+    <h2 class="cta__title">
+      まずは<span>LINE</span>で、<br>お気軽にご相談ください。
+    </h2>
+    <p class="cta__body">
+      お見積もりは無料です。お墓の写真をお送りいただければ、<br>
+      より正確な施工プランをご提案いたします。<br>
+      「ちょっと相談してみたい」だけでも、お気軽にどうぞ。
+    </p>
+    <div class="cta__buttons">
+      <a href="#" class="btn btn--line">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .629.285.629.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        LINEで無料相談
+      </a>
+    </div>
+    <p class="cta__note">受付時間　9:00 - 18:00　／　土日祝もご相談可</p>
+  </div>
+</section>
+
+<!-- ============================================
+     Footer
+     ============================================ -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="brand">
+        <div class="brand__mark" role="img" aria-label="みやこ磨き"></div>
+        <div class="brand__name">みやこ磨き<small>MIYAKO MIGAKI</small></div>
+      </div>
+      <p class="site-footer__desc">
+        京都で墓石クリーニング・お墓参り代行を承っております。職人の技で、ご先祖様のお墓を本来の姿へ。お気軽にご相談ください。
+      </p>
+    </div>
+    <div>
+      <h4>SERVICES</h4>
+      <ul>
+        <li><a href="#service">墓石クリーニング</a></li>
+        <li><a href="#service">コーティング施工</a></li>
+        <li><a href="#service">お墓参り代行</a></li>
+        <li><a href="pages/before-after.html">施工事例</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>CONTACT</h4>
+      <ul>
+        <li>所在地：京都市</li>
+        <li>受付：9:00 - 18:00</li>
+        <li><a href="#contact">LINEで相談する</a></li>
+        <li><a href="#flow">ご依頼の流れ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <div>© 2026 みやこ磨き — MIYAKO MIGAKI</div>
+    <div>京都市</div>
+  </div>
+</footer>
+
+<!-- ============================================
+     Tweaks Panel
+     ============================================ -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <h5>TWEAKS</h5>
+  <div class="tweak-row">
+    <label>バリエーション</label>
+    <div class="seg" id="variantSeg">
+      <button data-val="a" class="active">A 王道 和モダン</button>
+      <button data-val="b">B 伝統色ビビッド</button>
+      <button data-val="c">C 和紙クリーム</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>エピソード展開</label>
+    <div class="seg" id="episodeSeg">
+      <button data-val="false" class="active">折りたたみ</button>
+      <button data-val="true">全文表示</button>
+    </div>
+  </div>
+</div>
 
 <script>
-var LINE_OFFICIAL_URL = "https://lin.ee/XXXXXXX";
-var GRADES = {A:{label:"良好",color:"#2E7D32",bg:"#E8F5E9",mark:"✓"},B:{label:"軽微な劣化",color:"#F57F17",bg:"#FFF9C4",mark:"△"},C:{label:"要メンテナンス",color:"#E65100",bg:"#FFF3E0",mark:"!"},D:{label:"早急な対応必要",color:"#B71C1C",bg:"#FFEBEE",mark:"!!"}};
-var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},{name:"竹",title:"標準クリーニング",items:"梅（献花除く）+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},{name:"松",title:"長期美観維持プラン",items:"竹+撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}];
-var state = {photos:[],cust:{name:"",location:"",temple:"",phone:""},busy:false,result:null,err:"",status:"",tab:"input"};
-
-function compressImage(dataUrl,maxPx,quality){return new Promise(function(resolve){var img=new Image();img.onload=function(){var w=img.width,h=img.height;if(w>maxPx||h>maxPx){if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;}}var cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(img,0,0,w,h);resolve(cv.toDataURL("image/jpeg",quality));};img.onerror=function(){resolve(null);};img.src=dataUrl;});}
-function fmtVal(v,c,f){if(!v)return f||"—";if(c==="低")return f||"不明";return v;}
-function esc(s){if(s==null)return "";return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-
-function updatePlanRecommendation(r) {
-  var recommendedName = "竹";
-  if (r && r.recommended_plan) {
-    var p = String(r.recommended_plan).trim();
-    if (p.indexOf("松") >= 0) recommendedName = "松";
-    else if (p.indexOf("竹") >= 0) recommendedName = "竹";
-    else if (p.indexOf("梅") >= 0) recommendedName = "梅";
-  } else if (r) {
-    if (r.overall_grade === "A") recommendedName = "梅";
-    else if (r.overall_grade === "D") recommendedName = "松";
-    else recommendedName = "竹";
+/* ─── Tweaks ─── */
+const tweaks = Object.assign({}, TWEAK_DEFAULTS);
+function applyTweaks(){
+  document.body.classList.remove('variant-a','variant-b','variant-c');
+  document.body.classList.add('variant-'+tweaks.variant);
+  const more = document.getElementById('episodeMore');
+  const toggle = document.getElementById('episodeToggle');
+  if(tweaks.show_full_episode){
+    more.classList.add('open');
+    toggle.style.display='none';
+  } else {
+    more.classList.remove('open');
+    toggle.style.display='block';
+    toggle.innerHTML='続きを読む &nbsp;▾';
   }
-  for (var i = 0; i < PLANS.length; i++) {
-    PLANS[i].best = (PLANS[i].name === recommendedName);
-  }
+  document.querySelectorAll('#variantSeg button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.val===tweaks.variant);
+  });
+  document.querySelectorAll('#episodeSeg button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.val===String(tweaks.show_full_episode));
+  });
+}
+applyTweaks();
+
+document.querySelectorAll('#variantSeg button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    tweaks.variant=b.dataset.val;
+    applyTweaks();
+    window.parent.postMessage({type:'__edit_mode_set_keys', edits:{variant:tweaks.variant}},'*');
+  });
+});
+document.querySelectorAll('#episodeSeg button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    tweaks.show_full_episode = b.dataset.val==='true';
+    applyTweaks();
+    window.parent.postMessage({type:'__edit_mode_set_keys', edits:{show_full_episode:tweaks.show_full_episode}},'*');
+  });
+});
+
+window.addEventListener('message',(e)=>{
+  const d=e.data||{};
+  if(d.type==='__activate_edit_mode'){document.getElementById('tweaksPanel').classList.add('open');}
+  if(d.type==='__deactivate_edit_mode'){document.getElementById('tweaksPanel').classList.remove('open');}
+});
+window.parent.postMessage({type:'__edit_mode_available'},'*');
+
+/* ─── Episode toggle ─── */
+function toggleEpisode(){
+  const m = document.getElementById('episodeMore');
+  const t = document.getElementById('episodeToggle');
+  m.classList.toggle('open');
+  t.innerHTML = m.classList.contains('open') ? '閉じる &nbsp;▴' : '続きを読む &nbsp;▾';
 }
 
-function render(){var root=document.getElementById("app");root.innerHTML=headerHTML()+tabsHTML()+(state.tab==="input"?inputHTML():resultHTML());attachHandlers();}
-
-function headerHTML(){return '<div style="background:linear-gradient(135deg,#1a1a2e,#2d2d44,#1a1a2e);padding:16px 20px 14px;text-align:center;border-bottom:3px solid #c9a961;"><img src="/miyako_migaki_logo_master.svg" alt="みやこ磨き" style="width:72px;height:72px;display:block;margin:0 auto 6px;background:#fff;border-radius:50%;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.2);"><div class="serif" style="font-size:12px;color:#c9a961;letter-spacing:6px;margin-bottom:5px;">みやこ磨き</div><div class="serif" style="font-size:19px;color:#fff;font-weight:700;letter-spacing:3px;">お墓の健康診断書</div></div>';}
-
-function tabsHTML(){var hr=!!state.result;return '<div style="display:flex;border-bottom:1px solid #e0e0e0;background:#fafafa;"><button data-tab="input" style="flex:1;padding:10px 4px;border:none;background:transparent;border-bottom:'+(state.tab==="input"?"3px solid #c9a961":"3px solid transparent")+';font-size:12px;font-weight:'+(state.tab==="input"?600:400)+';color:'+(state.tab==="input"?"#1a1a2e":"#888")+';cursor:pointer;">📝 入力</button><button data-tab="result" '+(hr?"":"disabled")+' style="flex:1;padding:10px 4px;border:none;background:transparent;border-bottom:'+(state.tab==="result"?"3px solid #c9a961":"3px solid transparent")+';font-size:12px;font-weight:'+(state.tab==="result"?600:400)+';color:'+(hr?(state.tab==="result"?"#1a1a2e":"#888"):"#ccc")+';cursor:'+(hr?"pointer":"not-allowed")+';">📋 結果</button></div>';}
-
-function inputHTML(){
-  var ph=state.photos.map(function(p){return '<div style="position:relative;"><img src="'+p.dataUrl+'" alt="" style="width:100%;height:80px;object-fit:cover;border-radius:8px;border:1px solid #e0e0e0;"><button data-remove="'+p.id+'" style="position:absolute;top:-5px;right:-5px;width:20px;height:20px;border-radius:50%;border:none;background:#d32f2f;color:#fff;font-size:11px;cursor:pointer;">×</button></div>';}).join("");
-  var fs=[["name","ご依頼者名","山田 太郎"],["location","墓所在地","京都市東山区 ○○霊園"],["temple","寺院名（任意）","○○寺"],["phone","連絡先（任意）","090-xxxx-xxxx"]];
-  var cf=fs.map(function(f){return '<div><label style="display:block;font-size:11px;font-weight:500;color:#555;margin-bottom:3px;">'+f[1]+'</label><input data-cust="'+f[0]+'" type="text" value="'+esc(state.cust[f[0]])+'" placeholder="'+f[2]+'" style="width:100%;padding:9px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#fafafa;outline:none;"></div>';}).join("");
-  var cr=state.photos.length>0&&!state.busy;
-  var bl=state.busy?'<span class="spinner"></span> '+esc(state.status||"AI分析中..."):'🔍 AI診断を実行';
-  return '<div><div style="padding:16px 20px;"><div class="serif" style="font-size:15px;font-weight:600;color:#1a1a2e;margin-bottom:10px;">📷 墓石写真 <span style="color:#d32f2f;font-size:12px;font-weight:500;">（必須）</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><button data-cam style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;cursor:pointer;"><span style="font-size:22px;">📸</span><span style="font-size:12px;">カメラで撮影</span></button><button data-gal style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border:none;border-radius:10px;background:#5c5c7a;color:#fff;cursor:pointer;"><span style="font-size:22px;">🖼</span><span style="font-size:12px;">写真を選択</span></button><input id="camInput" type="file" accept="image/*" capture="environment" style="display:none;"><input id="galInput" type="file" accept="image/*" multiple style="display:none;"></div>'+(state.photos.length>0?'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:12px;">'+ph+'</div>':"")+'</div><div style="height:1px;background:#eee;margin:0 20px;"></div><div style="padding:16px 20px;"><div class="serif" style="font-size:15px;font-weight:600;color:#1a1a2e;margin-bottom:10px;">👤 顧客情報</div><div style="display:grid;gap:10px;">'+cf+'</div></div><div style="padding:0 20px 12px;"><button id="runBtn" '+(cr?"":"disabled")+' style="width:100%;padding:14px;border:none;border-radius:10px;background:'+(cr?"linear-gradient(135deg,#1a1a2e,#2d2d44)":"#ccc")+';color:#fff;font-size:15px;font-weight:600;cursor:'+(cr?"pointer":"not-allowed")+';letter-spacing:2px;" class="serif">'+bl+'</button></div>'+(state.status&&!state.err?'<div style="padding:0 20px 12px;"><div style="background:#E3F2FD;border:1px solid #90CAF9;border-radius:10px;padding:10px;text-align:center;font-size:12px;color:#1565C0;font-weight:500;">'+esc(state.status)+'</div></div>':"")+(state.err?'<div style="padding:0 20px 16px;"><div style="background:#FFEBEE;border:1px solid #EF9A9A;border-radius:10px;padding:12px;"><div style="font-size:13px;font-weight:600;color:#C62828;margin-bottom:4px;">エラー</div><div style="font-size:12px;color:#555;line-height:1.5;word-break:break-all;">'+esc(state.err)+'</div></div></div>':"")+'</div>';
-}
-
-function resultHTML(){
-  if(!state.result)return '<div style="padding:40px 20px;text-align:center;color:#999;font-size:13px;">入力タブから診断を実行してください</div>';
-  var r=state.result;
-  updatePlanRecommendation(r);
-  var g=GRADES[r.overall_grade]||GRADES.B;var now=new Date();var nxt=new Date(now);nxt.setMonth(nxt.getMonth()+(r.next_inspection_months||6));var det=r.deterioration||[];var sz=r.estimated_size;
-  var st=sz&&sz.confidence!=="低"?sz.width_cm+"x"+sz.depth_cm+"x"+sz.height_cm+"cm":"不明";var sc=(sz&&sz.confidence)||"不明";
-  var cs='background:#f8f6f0;border-radius:10px;padding:14px;margin-bottom:14px;';
-  var ai='<div style="font-size:9px;color:#999;font-weight:500;font-style:italic;">※ AI画像分析による概算評価です</div>';
-  var dh=det.length===0?'<div style="font-size:12px;color:#888;">劣化は検出されませんでした</div>':det.map(function(d,i){var c=d.severity==="重度"?"#d32f2f":d.severity==="中度"?"#ef6c00":"#2e7d32";return '<div style="padding:8px 0;border-bottom:'+(i<det.length-1?"1px solid #e8e0d0":"none")+';"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><span style="font-weight:600;font-size:13px;color:#333;">'+esc(d.type)+'</span><span style="background:'+c+';color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;">'+esc(d.severity)+'</span></div><div style="font-size:11px;color:#777;">箇所：'+esc(d.location)+'</div><div style="font-size:12px;color:#555;margin-top:3px;line-height:1.5;">'+esc(d.description)+'</div></div>';}).join("");
-  var ph=state.photos.length>0?'<div style="'+cs+'"><div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">現状写真</div><div style="display:grid;grid-template-columns:'+(state.photos.length===1?"1fr":"1fr 1fr")+';gap:6px;">'+state.photos.map(function(p){return '<img src="'+p.dataUrl+'" alt="" style="width:100%;height:120px;object-fit:cover;border-radius:6px;">';}).join("")+'</div></div>':"";
-  var pl=PLANS.map(function(p){return '<div style="background:'+p.bg+';border:'+(p.best?"2px solid "+p.color:"1px solid #e0e0e0")+';border-radius:10px;padding:12px;position:relative;">'+(p.best?'<div style="position:absolute;top:-8px;right:10px;background:'+p.color+';color:#fff;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;">おすすめ</div>':"")+'<div style="display:flex;align-items:center;gap:10px;"><span class="serif" style="background:'+p.color+';color:#fff;font-size:11px;font-weight:800;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+p.name+'</span><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#333;">'+p.title+'</div><div style="font-size:11px;color:#777;margin-top:2px;">'+p.items+'</div></div></div></div>';}).join("");
-  return '<div style="padding:16px 20px;"><div style="background:'+g.bg+';border:2px solid '+g.color+';border-radius:12px;padding:16px;text-align:center;margin-bottom:16px;"><div style="font-size:11px;color:#666;">総合評価</div><div class="serif" style="font-size:44px;font-weight:800;color:'+g.color+';line-height:1;">'+esc(r.overall_grade)+'</div><div style="font-size:15px;font-weight:600;color:'+g.color+';margin-top:2px;">'+g.mark+' '+g.label+'</div></div><div style="'+cs+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;"><div style="font-size:13px;font-weight:600;color:#1a1a2e;">基本情報</div>'+ai+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div><div style="font-size:10px;color:#999;">石種</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(fmtVal(r.stone_type,r.stone_type_confidence,"不明"))+'</div></div><div><div style="font-size:10px;color:#999;">建墓推定年数</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(fmtVal(r.estimated_age,r.estimated_age_confidence,"不定"))+'</div></div><div><div style="font-size:10px;color:#999;">推定サイズ</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(st)+'</div></div><div><div style="font-size:10px;color:#999;">サイズ精度</div><div style="font-size:13px;font-weight:500;color:#333;">'+esc(sc)+'</div></div></div></div><div style="'+cs+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;"><div style="font-size:13px;font-weight:600;color:#1a1a2e;">劣化診断詳細</div>'+ai+'</div>'+dh+'</div>'+ph+'<div style="'+cs+'"><div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">推奨施工・次回診断</div><div style="font-size:13px;color:#333;line-height:1.7;margin-bottom:8px;">'+esc(r.recommended_service)+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:#fff;border-radius:8px;padding:8px;text-align:center;border:1px solid #e0d8c8;"><div style="font-size:10px;color:#999;">推奨施工時期</div><div style="font-size:13px;font-weight:600;color:#c9a961;">'+esc(r.recommended_timing)+'</div></div><div style="background:#fff;border-radius:8px;padding:8px;text-align:center;border:1px solid #e0d8c8;"><div style="font-size:10px;color:#999;">次回診断目安</div><div style="font-size:13px;font-weight:600;color:#c9a961;">'+nxt.getFullYear()+'年'+(nxt.getMonth()+1)+'月</div></div></div></div>'+(r.notes?'<div style="background:#fffde7;border:1px solid #fff176;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="font-size:11px;font-weight:600;color:#f57f17;margin-bottom:3px;">⚠ その他所見</div><div style="font-size:12px;color:#555;line-height:1.6;">'+esc(r.notes)+'</div></div>':"")+'<div style="font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e0d8c8;">お見積り概算プラン</div><div style="font-size:11px;color:#999;margin-bottom:10px;">※ 正式なお見積りは現地確認後にご提案いたします</div><div style="display:grid;gap:8px;margin-bottom:14px;">'+pl+'</div><a href="'+LINE_OFFICIAL_URL+'" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><div style="background:linear-gradient(135deg,#06C755,#00B900);color:#fff;padding:14px 20px;border-radius:12px;text-align:center;margin-bottom:16px;box-shadow:0 4px 12px rgba(6,199,85,.25);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;"><span style="background:#fff;color:#06C755;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;">L</span><div style="text-align:left;"><div style="font-size:15px;font-weight:700;letter-spacing:1px;">簡易見積もりを進める</div><div style="font-size:10px;opacity:.9;margin-top:2px;">LINE公式アカウントでご相談</div></div></div></a><div style="border-top:2px solid #c9a961;padding-top:12px;text-align:center;"><div class="serif" style="font-size:13px;color:#1a1a2e;font-weight:600;">みやこ磨き</div><div style="font-size:10px;color:#999;margin-top:3px;">診断日：'+now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日'+(state.cust.name?' ｜ '+esc(state.cust.name)+' 様':"")+'</div></div></div>';
-}
-
-function attachHandlers(){
-  document.querySelectorAll("[data-tab]").forEach(function(b){b.addEventListener("click",function(){var t=b.getAttribute("data-tab");if(t==="result"&&!state.result)return;state.tab=t;render();});});
-  var cam=document.querySelector("[data-cam]");var gal=document.querySelector("[data-gal]");
-  if(cam)cam.addEventListener("click",function(){document.getElementById("camInput").click();});
-  if(gal)gal.addEventListener("click",function(){document.getElementById("galInput").click();});
-  var ci=document.getElementById("camInput");var gi=document.getElementById("galInput");
-  if(ci)ci.addEventListener("change",handleFiles);if(gi)gi.addEventListener("change",handleFiles);
-  document.querySelectorAll("[data-remove]").forEach(function(b){b.addEventListener("click",function(){var id=parseFloat(b.getAttribute("data-remove"));state.photos=state.photos.filter(function(p){return p.id!==id;});render();});});
-  document.querySelectorAll("[data-cust]").forEach(function(inp){inp.addEventListener("input",function(){state.cust[inp.getAttribute("data-cust")]=inp.value;});});
-  var r=document.getElementById("runBtn");if(r)r.addEventListener("click",runDiagnosis);
-}
-
-function handleFiles(e){Array.from(e.target.files).forEach(function(f){var rd=new FileReader();rd.onload=function(ev){state.photos.push({id:Date.now()+Math.random(),dataUrl:ev.target.result,file:f});render();};rd.readAsDataURL(f);});e.target.value="";}
-
-async function runDiagnosis(){
-  if(!state.photos.length||state.busy)return;
-  state.busy=true;state.err="";state.status="📷 写真を圧縮中...";render();
-  try{
-    var compressed=[];
-    for(var i=0;i<Math.min(state.photos.length,2);i++){
-      state.status="📷 写真を圧縮中... ("+(i+1)+"/"+Math.min(state.photos.length,2)+")";render();
-      var small=await compressImage(state.photos[i].dataUrl,800,0.6);
-      if(small)compressed.push({base64:small.split(",")[1],mediaType:"image/jpeg"});
-    }
-    if(compressed.length===0)throw new Error("写真の圧縮に失敗");
-    state.status="🤖 AIが分析中...";render();
-    var resp=await fetch("/api/diagnose",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({images:compressed})});
-    var data=await resp.json();
-    if(!resp.ok)throw new Error(data.error||"API Error "+resp.status);
-    if(!data.result)throw new Error("診断結果なし");
-    state.result=data.result;state.tab="result";state.status="";
-  }catch(e){state.err=e.message||String(e);state.status="";}
-  state.busy=false;render();
-}
-
-render();
+/* ─── Reveal on scroll ─── */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.12});
+document.querySelectorAll('.service-card,.kodawari-item,.flow-step,.section-head,.intro__inner,.episode__body,.cta__inner').forEach(el=>{
+  el.classList.add('reveal');
+  io.observe(el);
+});
 </script>
 </body>
 </html>

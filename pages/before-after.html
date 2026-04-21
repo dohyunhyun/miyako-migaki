@@ -21,27 +21,27 @@ body{font-family:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',sans-serif;ba
 /* ── Header ── */
 header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.25);padding:0 1.25rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
 .logo{display:flex;align-items:center;gap:10px;}
-.logo-mark{width:34px;height:34px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gold);}
+.logo-mark{width:44px;height:44px;background:url('../assets/logo-dark.svg') center/contain no-repeat;flex-shrink:0;}
 .logo-name{font-family:'Noto Serif JP',serif;font-size:1rem;color:var(--white);letter-spacing:0.1em;}
-.logo-name small{display:block;font-size:0.5rem;color:var(--gold-lt);letter-spacing:0.2em;font-family:'Zen Kaku Gothic New',sans-serif;}
-.header-back{font-size:0.75rem;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);padding:0.35rem 0.9rem;border-radius:99px;transition:0.2s;text-decoration:none;}
+.logo-name small{display:block;font-size:0.62rem;color:var(--gold-lt);letter-spacing:0.2em;font-family:'Zen Kaku Gothic New',sans-serif;}
+.header-back{font-size:0.88rem;color:rgba(255,255,255,0.72);border:1px solid rgba(255,255,255,0.28);padding:0.5rem 1.1rem;border-radius:99px;transition:0.2s;text-decoration:none;min-height:40px;display:inline-flex;align-items:center;}
 .header-back:hover{color:var(--gold-lt);border-color:var(--gold);}
 
 /* ── Page Hero ── */
 .page-hero{text-align:center;padding:3rem 1.5rem 2.5rem;}
 .page-hero::after{content:'';display:block;width:60px;height:1px;background:var(--gold);margin:1.25rem auto 0;}
-.page-label{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold-lt);margin-bottom:0.75rem;display:block;}
-.page-title{font-family:'Noto Serif JP',serif;font-size:clamp(1.5rem,5vw,2.2rem);font-weight:400;letter-spacing:0.08em;}
+.page-label{font-size:0.82rem;letter-spacing:0.3em;color:var(--gold-lt);margin-bottom:0.75rem;display:block;}
+.page-title{font-family:'Noto Serif JP',serif;font-size:clamp(1.7rem,5.5vw,2.4rem);font-weight:400;letter-spacing:0.08em;line-height:1.5;}
 .page-title span{color:var(--gold);}
-.page-sub{margin-top:1rem;font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.8;}
+.page-sub{margin-top:1rem;font-size:1rem;color:rgba(255,255,255,0.78);line-height:1.9;}
 
 /* ── Tabs ── */
 .tabs-wrap{padding:0 1rem 1rem;max-width:700px;margin:0 auto;}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;}
-.tab-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:0.75rem 0.5rem;cursor:pointer;text-align:center;transition:all 0.3s ease;color:rgba(255,255,255,0.6);font-size:0.75rem;line-height:1.5;font-family:inherit;}
-.tab-btn .tab-icon{font-size:1.4rem;display:block;margin-bottom:0.3rem;}
-.tab-btn .tab-num{font-family:'Noto Serif JP',serif;font-size:0.55rem;letter-spacing:0.15em;color:var(--gold-lt);opacity:0.6;display:block;margin-bottom:0.2rem;}
-.tab-btn .tab-name{font-family:'Noto Serif JP',serif;font-size:0.78rem;letter-spacing:0.05em;display:block;}
+.tab-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:0.95rem 0.5rem;cursor:pointer;text-align:center;transition:all 0.3s ease;color:rgba(255,255,255,0.72);font-size:0.9rem;line-height:1.5;font-family:inherit;min-height:82px;}
+.tab-btn .tab-icon{font-size:1.6rem;display:block;margin-bottom:0.3rem;}
+.tab-btn .tab-num{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.15em;color:var(--gold-lt);opacity:0.75;display:block;margin-bottom:0.2rem;}
+.tab-btn .tab-name{font-family:'Noto Serif JP',serif;font-size:0.98rem;letter-spacing:0.05em;display:block;}
 .tab-btn:hover{border-color:var(--gold);color:rgba(255,255,255,0.85);background:rgba(201,168,76,0.08);}
 .tab-btn.active{background:var(--navy);border-color:var(--gold);color:var(--white);box-shadow:0 0 0 1px var(--gold),0 4px 20px rgba(201,168,76,0.2);}
 .tab-btn.active .tab-num{opacity:1;}
@@ -55,11 +55,11 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 /* ── Panel Header ── */
 .panel-header{background:var(--navy);border:1px solid rgba(201,168,76,0.3);border-radius:12px 12px 0 0;padding:1.25rem 1.5rem;border-bottom:none;}
 .panel-header-multi{background:var(--navy);border:1px solid rgba(201,168,76,0.3);border-radius:12px 12px 0 0;padding:1.25rem 1.5rem;border-bottom:none;}
-.panel-label{font-size:0.6rem;letter-spacing:0.25em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:0.3rem;display:block;}
-.panel-title{font-family:'Noto Serif JP',serif;font-size:1.05rem;font-weight:500;color:var(--white);letter-spacing:0.05em;}
-.panel-desc{margin-top:0.5rem;font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.75;}
+.panel-label{font-size:0.78rem;letter-spacing:0.25em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:0.3rem;display:block;}
+.panel-title{font-family:'Noto Serif JP',serif;font-size:1.2rem;font-weight:500;color:var(--white);letter-spacing:0.05em;}
+.panel-desc{margin-top:0.5rem;font-size:0.95rem;color:rgba(255,255,255,0.75);line-height:1.85;}
 .panel-points{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;}
-.panel-point{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-lt);font-size:0.68rem;padding:3px 10px;border-radius:99px;letter-spacing:0.05em;}
+.panel-point{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-lt);font-size:0.82rem;padding:4px 12px;border-radius:99px;letter-spacing:0.05em;}
 
 /* ── Case Divider (複数事例用) ── */
 .case-divider{
@@ -69,7 +69,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 .case-divider-line{flex:1;height:1px;background:rgba(201,168,76,0.2);}
 .case-divider-label{
   font-family:'Noto Serif JP',serif;
-  font-size:0.7rem;color:var(--gold);
+  font-size:0.88rem;color:var(--gold);
   letter-spacing:0.2em;white-space:nowrap;
   padding:4px 14px;
   border:1px solid rgba(201,168,76,0.35);
@@ -80,7 +80,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 /* ── Slider ── */
 .slider-wrap{position:relative;border:1px solid rgba(201,168,76,0.3);border-top:none;overflow:hidden;background:#000;user-select:none;touch-action:none;;aspect-ratio:4/3;}
 .slider-wrap.rounded-bottom{border-radius:0 0 12px 12px;}
-.slider-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);color:var(--gold-lt);font-size:0.7rem;padding:0.4rem 1rem;border-radius:99px;border:1px solid rgba(201,168,76,0.4);letter-spacing:0.1em;pointer-events:none;z-index:10;transition:opacity 0.5s;white-space:nowrap;}
+.slider-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:var(--gold-lt);font-size:0.88rem;padding:0.55rem 1.2rem;border-radius:99px;border:1px solid var(--gold);pointer-events:none;transition:opacity 0.3s;z-index:5;}rgba(201,168,76,0.4);letter-spacing:0.1em;pointer-events:none;z-index:10;transition:opacity 0.5s;white-space:nowrap;}
 .slider-hint.hidden{opacity:0;}
 .slider-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;}
 .img-after{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;}
@@ -89,15 +89,15 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 .slider-line{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--gold);z-index:3;transform:translateX(-50%);box-shadow:0 0 12px rgba(201,168,76,0.6);}
 .slider-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:ew-resize;box-shadow:0 2px 12px rgba(0,0,0,0.4);}
 .slider-handle svg{width:22px;height:22px;fill:var(--navy-dark);}
-.slider-label{position:absolute;top:12px;padding:4px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;border-radius:3px;z-index:4;pointer-events:none;}
+.slider-label{position:absolute;top:12px;padding:5px 14px;font-size:0.82rem;font-weight:700;letter-spacing:0.1em;border-radius:3px;z-index:4;pointer-events:none;}
 .label-before{left:12px;background:rgba(0,0,0,0.6);color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);}
 .label-after{right:12px;background:var(--gold);color:var(--navy-dark);}
 
 /* ── Caption ── */
 .panel-caption{margin-top:1.25rem;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:1.1rem 1.25rem;}
 .panel-caption.no-top-margin{margin-top:0;border-radius:0 0 8px 8px;border-top:none;}
-.caption-title{font-family:'Noto Serif JP',serif;font-size:0.8rem;color:var(--gold-lt);margin-bottom:0.6rem;letter-spacing:0.08em;}
-.caption-body{font-size:0.78rem;color:rgba(255,255,255,0.6);line-height:1.85;}
+.caption-title{font-family:'Noto Serif JP',serif;font-size:1rem;color:var(--gold-lt);margin-bottom:0.6rem;letter-spacing:0.08em;}
+.caption-body{font-size:0.95rem;color:rgba(255,255,255,0.8);line-height:1.95;}
 
 /* ── Multi-slider block ── */
 .multi-slider-block{
@@ -123,8 +123,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 
 /* ── CTA ── */
 .cta-wrap{text-align:center;margin-top:2.5rem;padding:0 1rem 1rem;}
-.cta-text{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:1.25rem;line-height:1.8;}
-.btn-cta{display:inline-block;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);color:var(--navy-dark);font-family:'Noto Serif JP',serif;font-size:0.95rem;font-weight:700;padding:1rem 2.5rem;border-radius:4px;letter-spacing:0.1em;box-shadow:0 4px 20px rgba(201,168,76,0.35);transition:0.3s;text-decoration:none;}
+.cta-text{font-size:1rem;color:rgba(255,255,255,0.75);margin-bottom:1.25rem;line-height:1.9;}
+.btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);color:var(--navy-dark);font-family:'Noto Serif JP',serif;font-size:1.1rem;font-weight:700;padding:1.2rem 2.2rem;min-height:58px;border-radius:3px;box-shadow:0 4px 20px rgba(201,168,76,0.3);transition:0.25s;text-decoration:none;letter-spacing:0.05em;}rem 2.5rem;border-radius:4px;letter-spacing:0.1em;box-shadow:0 4px 20px rgba(201,168,76,0.35);transition:0.3s;text-decoration:none;}
 .btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,0.5);}
 </style>
 </head>
@@ -132,10 +132,10 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 
 <header>
   <div class="logo">
-    <div class="logo-mark">磨</div>
+    <div class="logo-mark" role="img" aria-label="みやこ磨き"></div>
     <div class="logo-name">みやこ磨き<small>MIYAKO MIGAKI</small></div>
   </div>
-  <a href="#" class="header-back">← LPへ戻る</a>
+  <a href="../index.html" class="header-back">← トップへ戻る</a>
 </header>
 
 <div class="page-hero">
@@ -146,17 +146,17 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 
 <div class="tabs-wrap">
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab(0,this)">
+    <button class="tab-btn active" id="tab-0" data-idx="0" onclick="switchTab(0,this)">
       <span class="tab-icon">🪨</span>
       <span class="tab-num">SERVICE 01</span>
       <span class="tab-name">墓石<br>クリーニング</span>
     </button>
-    <button class="tab-btn" onclick="switchTab(1,this)">
+    <button class="tab-btn" id="tab-1" data-idx="1" onclick="switchTab(1,this)">
       <span class="tab-icon">✨</span>
       <span class="tab-num">SERVICE 02</span>
       <span class="tab-name">コーティング<br>施工</span>
     </button>
-    <button class="tab-btn" onclick="switchTab(2,this)">
+    <button class="tab-btn" id="tab-2" data-idx="2" onclick="switchTab(2,this)">
       <span class="tab-icon">🌸</span>
       <span class="tab-num">SERVICE 03</span>
       <span class="tab-name">お墓参り<br>代行</span>
@@ -301,8 +301,9 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,28,53,0.97);backdrop-
 </div><!-- /panels -->
 
 <div class="cta-wrap">
-  <p class="cta-text">ご不明な点はお気軽にご相談ください。<br>お見積もりは無料です。</p>
-  <a href="#" class="btn-cta">無料で簡易見積もりを依頼する</a>
+  <p class="cta-text">仕上がりのイメージはいかがでしたか？<br>お見積もり・ご相談は、LINE公式アカウントより承っております。</p>
+  <a href="../index.html#contact" class="btn-cta">LINEで無料相談・お見積もりを依頼する</a>
+  <p style="margin-top:1rem;font-size:0.9rem;color:rgba(255,255,255,0.65);">※ お墓の写真をお送りいただくと、より正確なお見積もりが可能です</p>
 </div>
 
 <script>
@@ -315,6 +316,30 @@ function switchTab(idx,btn){
   const ids = idx===0 ? ['0a','0b'] : [String(idx)];
   ids.forEach(id => initSlider(id));
 }
+
+// Support deep-link via URL hash: #service-1 / #service-2 / #service-3
+(function(){
+  function openFromHash(){
+    const m = (location.hash || '').match(/service-([123])/i);
+    if(!m) return;
+    const idx = parseInt(m[1],10) - 1;
+    const btn = document.getElementById('tab-'+idx);
+    if(btn){
+      switchTab(idx, btn);
+      // スクロールをタブ周りへ
+      setTimeout(()=>{
+        const wrap = document.querySelector('.tabs-wrap');
+        if(wrap) window.scrollTo({top: wrap.offsetTop - 80, behavior:'smooth'});
+      }, 80);
+    }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', openFromHash);
+  } else {
+    openFromHash();
+  }
+  window.addEventListener('hashchange', openFromHash);
+})();
 
 function initSlider(id){
   const wrap=document.getElementById('slider-'+id);

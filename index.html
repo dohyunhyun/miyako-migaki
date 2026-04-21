@@ -24,7 +24,7 @@
 <script>
 var LINE_OFFICIAL_URL = "https://lin.ee/XXXXXXX";
 var GRADES = {A:{label:"良好",color:"#2E7D32",bg:"#E8F5E9",mark:"✓"},B:{label:"軽微な劣化",color:"#F57F17",bg:"#FFF9C4",mark:"△"},C:{label:"要メンテナンス",color:"#E65100",bg:"#FFF3E0",mark:"!"},D:{label:"早急な対応必要",color:"#B71C1C",bg:"#FFEBEE",mark:"!!"}};
-var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},{name:"竹",title:"標準クリーニング",items:"梅+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},{name:"松",title:"長期美観維持プラン",items:"竹+撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}];
+var PLANS = [{name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},{name:"竹",title:"標準クリーニング",items:"梅（献花除く）+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},{name:"松",title:"長期美観維持プラン",items:"竹+撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}];
 var state = {photos:[],cust:{name:"",location:"",temple:"",phone:""},busy:false,result:null,err:"",status:"",tab:"input"};
 
 function compressImage(dataUrl,maxPx,quality){return new Promise(function(resolve){var img=new Image();img.onload=function(){var w=img.width,h=img.height;if(w>maxPx||h>maxPx){if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;}}var cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(img,0,0,w,h);resolve(cv.toDataURL("image/jpeg",quality));};img.onerror=function(){resolve(null);};img.src=dataUrl;});}
